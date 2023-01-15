@@ -1,0 +1,48 @@
+
+body{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    background: url(../IMG/background.jpg) no-repeat center center  fixed;
+    background-size: cover;
+}
+nav{
+    
+    height: 80px;
+    width: 100%;
+    
+}
+.enlace{
+    position: absolute;
+    padding: 0px 50px;
+    height: 10px;
+    width: 10px;
+}
+.logo{
+    padding-top: 10px;
+    height: 80px;
+}
+nav ul{
+    float: right;
+    margin-right: 20px;
+}
+nav ul li{
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 2px;
+}
+nav ul li a{
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+    padding: 5px 13px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+li a.active, li a:hover{
+    text-decoration: none;
+    background: #CDF938 ;
+    color: rgb(8, 34, 55);
+    transition: .4s;
+}
