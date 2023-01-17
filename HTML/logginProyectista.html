@@ -30,14 +30,22 @@
                 <div>
                     <p id="E-Sesion" >Inicia Sesión</p>
                 </div>
-                <form class="col-12">
+                <form class="col-12" id="login-form" method="POST">
+                    <div class="resultado"></div>
                     <div class="form-group" id="user-group">
+<<<<<<< HEAD
                         <input  class="form-control" type="text"  placeholder="AIM ID" name="" id="" value="" >
                     </div>
                     <div class="form-group" id="contrasena-group">
                         <input  class="form-control" type="password"  placeholder="Contraseña" name="" id="" value="">
+=======
+                        <input  class="form-control" type="text"  placeholder="AIM ID" name="aimid" id="aimid" value="">
                     </div>
-                    <button class="btn btn-primary" type="submit">Ingresar</button>
+                    <div class="form-group" id="contrasena-group">
+                        <input  class="form-control" type="password"  placeholder="Contraseña" name="password" id="password" value="">
+>>>>>>> cb8187fae4128a5d5494c4a932ed5707fd8a201f
+                    </div>
+                    <button class="btn btn-primary" type="submit" id="ingresar">Ingresar</button>
                 </form>
                 <div>
                     <a href="../HTML/forgotContrasena.html" >Olvide mi usuario o contraseña</a>
@@ -46,6 +54,6 @@
         </div>
 
     </div>
-    
+    <script src="../js/login.js"></script>
 </body>
 </html>
