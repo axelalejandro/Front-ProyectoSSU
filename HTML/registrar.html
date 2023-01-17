@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <!--Mi CSS-->
+    <link rel="stylesheet" href="../static/CSS/logginProyectista.css">
+
+    <title>Registro</title>
+</head>
+
+<body>
+    <div class="modal-dialog text-center">
+        <div class="col-sm-10 main-section">
+            <div class="modal-content">
+                <div class="col-12 user-img">
+                    <img src="../static/IMG/user.png" alt="">
+                </div>
+                <div>
+                    <p id="E-Sesion" >Inicia Sesión</p>
+                </div>
+                <form class="col-12" id="login-form" method="POST">
+                    <div class="resultado"></div>
+                    <div class="form-group" id="user-group">
+                        <input  class="form-control" type="text"  placeholder="Nombre completo" name="nombre" id="nombre" value="">
+                    </div>
+                    <div class="form-group" id="email-group">
+                        <input  class="form-control " type="email"  placeholder="Email" name="email" id="email" value="">
+                    </div>
+                    <div class="form-group" id="contrasena-group">
+                        <input  class="form-control" type="password"  placeholder="Contraseña" name="password" id="password" value="">
+                    </div>
+                    <div class="form-group" id="contrasena-group">
+                        <input  class="form-control" type="password"  placeholder="Repetir Contraseña" name="repetir_password" id="repetir_password" value="">
+                    </div>
+                    <div class="form-group" id="ciudad-group">
+                        <input  class="form-control" type="text"  placeholder="Ciudad" name="ciudad" id="ciudad" value="">
+                    </div>
+                    <div class="form-group" id="calendario-group">
+                        <input  class="form-control" type="date"  placeholder="Fecha de Nacimiento" name="fecha" id="fecha" value="">
+                    </div>
+                    <div class="form-group" id="grado-group">
+                        <select class="form-control" id="grado">
+                            <option>--Grado de estudios--</option>
+                            <option value="primaria">Primaria</option>
+                            <option value="secundaria">Secundaria</option>
+                            <option value="preparatoria">Preparatoria</option>
+                            <option value="licenciatura">Licenciatura</option>
+                            <option value="maestria">Maestria</option>
+                            <option value="doctorado">Doctorado</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="suscripcion-group">
+                        <select class="form-control" id="suscripcion">
+                            <option>--Suscripcion--</option>
+                            <option value="si">Si</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control"  resize="none" id="conociminetos" value="" rows="3" placeholder="Conocimientos"></textarea>
+                    </div>
+                    <div class="form-group ">
+                        <textarea class="form-control"  resize="none" id="intereses" value="" rows="3" placeholder="intereses"></textarea>
+                    </div>
+                    
+                    <button class="btn btn-primary"  type="submit" id="registrar">Registar</button>
+                </form>
+                <div>
+                    <a href="../HTML/forgotContrasena.html" >Olvide mi usuario o contraseña</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="../js/registrar.js" type="module"></script>
+</body>
+</html>

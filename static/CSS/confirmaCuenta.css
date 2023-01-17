@@ -1,0 +1,9 @@
+body{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    background: url(../IMG/background.jpg) no-repeat center center  fixed;
+    background-size: cover;
+}

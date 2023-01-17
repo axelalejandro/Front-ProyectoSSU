@@ -54,7 +54,23 @@ body{
 .form-group#contrasena-group::before{
     content: "\f023";
 }
+.form-group#email-group::before{
+    content: "\f0e0";
+}
+.form-group#ciudad-group::before{
+    content: "\f1ad";
+}
+
+.form-group#calendario-group::before{
+    content: "\f133";
+}
+
+
 button{
     width: 50%;
     margin: 5px 0 25px;
+}
+
+textarea {
+    resize: none;
 }

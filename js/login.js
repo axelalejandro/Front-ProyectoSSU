@@ -2,15 +2,15 @@ const loginBtn = document.getElementById('ingresar');
 const resultado = document.querySelector('.resultado');
 
 
-loginBtn.addEventListener('click', ingresar);
+loginBtn.addEventListener('click', registrar);
 
-async function ingresar(e) {
+async function registrar(e) {
     e.preventDefault();
     // obtener los datos del formulario
     const AIMID = document.getElementById('aimid').value;
     const password = document.getElementById('password').value;
     const data = { AIMID, password };
-    const url = 'http://localhost:3000/auth/login';
+    const url = 'http://localhost:3000/auth/registro';
     const resultado = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
