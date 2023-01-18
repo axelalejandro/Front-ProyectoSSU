@@ -4,9 +4,68 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <!--Mi CSS-->
+    <link rel="stylesheet" href="../static/CSS/listaTareas.css">
+    <title>Lista de tareas</title>
 </head>
 <body>
-    <h1>Lista de tareas</h1>
+    <nav>
+        <a href="#" class="enlace">
+            <img src="../static/IMG/aimLogo.jpg" class="logo" alt="">
+        </a>
+        <ul>
+            <li><a href="HomePage.html">Inicio</a></li>
+            <li><a href="#">Capitulos</a></li>
+            <li><a href="#">Correos</a></li>
+            <li><a href="listaTareas.html">lista de tareas</a></li>
+            <li><a href="#">Proyectos</a></li>
+            <li><a href="#">Departamentos</a></li>
+            <li><a href="#">Eventos</a></li>
+            <li><a href="#">Perfil</a></li>
+        </ul>
+   </nav>
+    <h1 >Lista de tareas</h1>
+    <div class="datos">
+        <p id="total"> Total: 5</p>
+        <p id="completada">Completadas: 2</p>
+    </div>
+
+    <!-- Contenido-->
+    <div class="contenedor" >
+        <form class="formulario" id="" method="">
+            <h4>Nueva Tarea</h4>
+            <div class="form-group" id="desc-group">
+                <input  class="form-control" type="text"  placeholder="Descripcion de Tarea" name="" id="" value="" >
+            </div>
+            <div class="form-group" id="time-group">
+                <input  class="form-control" type="time"  placeholder="Selec" name="" id="" value="" >
+            </div>
+            <div class="form-group" id="date-group">
+                <input  class="form-control" type="date"  placeholder="Selec" name="" id="" value="" >
+            </div>
+
+            <button class="btn btn-primary" type="submit" id="">Agregar</button>
+        </form>
+
+        <div class="tareas">
+            <div class="item-tarea">
+                <p>Entrar a la reunion del servicio social, esto creo se maneja con el back </p> 
+                <p>HORA: 2:00 p.m</p>
+                <p>Dia: 20/01/2023</p>
+                <div class="botones">
+                    <button class="eliminar">X</button>
+                    <button class="completada">✔</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 </body>
 </html>
