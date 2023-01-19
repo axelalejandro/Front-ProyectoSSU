@@ -35,7 +35,9 @@ async function agregarTarea(e) {
 
 obtenerTareas();
 async function obtenerTareas() {
+    // 
     const divTarea = document.querySelector('.item-tarea');
+    divTarea.innerHTML = '';
     const btnEliminar = document.querySelector('.eliminar');
     const btnCompletada = document.querySelector('.completada');
     const url = 'http://localhost:3000/tareas';
@@ -109,9 +111,9 @@ async function eliminarTarea(id)  {
     obtenerTareas();
 }
 async function completarTarea(id) {
-    const url = `http://localhost:3000/tareas/${id}`;
+    const url = `http://localhost:3000/tareas/completar/${id}`;
     const resultado = await fetch(url, {
-        method: 'PATCH',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -120,7 +122,9 @@ async function completarTarea(id) {
     const respuesta = await resultado.json();
     if(respuesta.ok === false){
         limpiarHTML();
+        console.log(respuesta);
     }
+
     obtenerTareas();
 }
 
