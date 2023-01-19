@@ -161,6 +161,9 @@ textarea {
 .contenedor .tareas {
     max-width: 100%;
     background-color: rgb(177, 200, 211);
+    /* agregar un alto y barra para bajar en el mismo contenedor */
+    height: 400px;
+    overflow-y: scroll;
 }
 
 .contenedor .item-tarea {
@@ -172,7 +175,11 @@ textarea {
     margin: 10px 0px;
 }
 
-
+.completada {
+    text-decoration: line-through;
+    color: rgb(226, 26, 16);
+    
+}
 
 @media (max-width: 600px) {
     .contenedor {

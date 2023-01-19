@@ -23,23 +23,19 @@ async function agregarTarea(e) {
     if (respuesta.ok === 'errores') {
         limpiarHTML();
         mostrarErrores(respuesta.errors);
+        return
     }
     if(respuesta.ok === false){
         limpiarHTML();
         mostrarError(respuesta);
+        return
     }
-    if(respuesta.ok === true){
-        limpiarHTML();
-        obtenerTareas();
-    }
+    obtenerTareas();
 }
 
 obtenerTareas();
 async function obtenerTareas() {
     const divTarea = document.querySelector('.item-tarea');
-    const descripcion = document.querySelector('.mostrar-descripcion');
-    const hora = document.querySelector('.mostrar-hora');
-    const fecha = document.querySelector('.mostrar-fecha');
     const btnEliminar = document.querySelector('.eliminar');
     const btnCompletada = document.querySelector('.completada');
     const url = 'http://localhost:3000/tareas';
@@ -51,7 +47,6 @@ async function obtenerTareas() {
         }
     });
     const respuesta = await resultado.json();
-    console.log(respuesta);
     if(respuesta.ok === false){
         btnEliminar.style.display = 'none';
         btnCompletada.style.display = 'none';
@@ -76,22 +71,57 @@ function mostrarTareas(tareas) {
         divTarea.innerHTML += ` 
         <div class="item-tarea container justify-content-between align-items-center">
             <div class="mostrar-descripcion">
-                <p>${tarea.nombre}</p>
+                <p class="${tarea.estado === false ? 'completada' : ''}">${tarea.nombre}</p>
             </div>
             <div class="mostrar-hora">
-                <p>${tarea.hora}</p>
+            <p class="${tarea.estado === false ? 'completada' : ''}">${tarea.hora}</p>
             </div>
             <div class="mostrar-fecha">
-                <p>${tarea.fecha}</p>
+            <p class="${tarea.estado === false ? 'completada' : ''}">${tarea.fecha}</p>
             </div>
            <div>
-           <button class="btn btn-primary" onclick="completarTarea(${tarea.id})">Editar</button>
-           <button class="btn btn-success" onclick="completarTarea(${tarea.id})">Completada</button>
+           <button class="btn btn-primary" onclick="editarTarea(${tarea.id})">Editar</button>
+            <button class="btn ${tarea.estado === true ? 'btn-success' : 'btn-warning'}" onclick="completarTarea(${tarea.id})">${tarea.estado === true ? 'Completada' : 'Pendiente'}</button>    
            <button class="btn btn-danger" onclick="eliminarTarea(${tarea.id})">Eliminar</button>
             </div>
         </div>
         `
     });
+}
+
+async function editarTarea(id) {
+
+}
+async function eliminarTarea(id)  {
+    const url = `http://localhost:3000/tareas/${id}`;
+    const resultado = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+    const respuesta = await resultado.json();
+    if(respuesta.ok === false){
+        limpiarHTML();
+        mostrarError(respuesta);
+    }
+    obtenerTareas();
+}
+async function completarTarea(id) {
+    const url = `http://localhost:3000/tareas/${id}`;
+    const resultado = await fetch(url, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+    const respuesta = await resultado.json();
+    if(respuesta.ok === false){
+        limpiarHTML();
+    }
+    obtenerTareas();
 }
 
 function limpiarHTML() {
