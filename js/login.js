@@ -10,7 +10,7 @@ async function registrar(e) {
     const AIMID = document.getElementById('aimid').value;
     const password = document.getElementById('password').value;
     const data = { AIMID, password };
-    const url = 'http://localhost:3000/auth/registro';
+    const url = 'http://localhost:3000/auth/login';
     const resultado = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),

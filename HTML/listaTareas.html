@@ -33,39 +33,35 @@
    </nav>
     <h1 >Lista de tareas</h1>
     <div class="datos">
-        <p id="total"> Total: 5</p>
-        <p id="completada">Completadas: 2</p>
+        <p id="total"></p>
+        <p id="completadas"></p>
+        <p id="pendientes"></p>
     </div>
 
     <!-- Contenido-->
     <div class="contenedor" >
         <form class="formulario" id="" method="">
             <h4>Nueva Tarea</h4>
+            <div class="resultado"></div>
             <div class="form-group" id="desc-group">
-                <input  class="form-control" type="text"  placeholder="Descripcion de Tarea" name="" id="" value="" >
+                <input  class="form-control" type="text"  placeholder="Descripcion de Tarea" name="descripcion" id="descripcion" value="" >
             </div>
             <div class="form-group" id="time-group">
-                <input  class="form-control" type="time"  placeholder="Selec" name="" id="" value="" >
+                <input  class="form-control" type="time"  placeholder="Selec" name="hora" id="hora" value="" >
             </div>
             <div class="form-group" id="date-group">
-                <input  class="form-control" type="date"  placeholder="Selec" name="" id="" value="" >
+                <input  class="form-control" type="date"  placeholder="Selec" name="fecha" id="fecha" value="" >
             </div>
 
-            <button class="btn btn-primary" type="submit" id="">Agregar</button>
+            <button class="btn btn-primary" type="submit" id="agregar-tarea">Agregar</button>
         </form>
 
-        <div class="tareas">
-            <div class="item-tarea">
-                <p>Entrar a la reunion del servicio social, esto creo se maneja con el back </p> 
-                <p>HORA: 2:00 p.m</p>
-                <p>Dia: 20/01/2023</p>
-                <div class="botones">
-                    <button class="eliminar">X</button>
-                    <button class="completada">✔</button>
-                </div>
+        <div class="tareas container w-auto">
+            <div class="item-tarea d-flex align-items-center justify-content-center flex-column">
             </div>
             
         </div>
     </div>
+    <script src="../js/listaTareas.js"></script>
 </body>
 </html>

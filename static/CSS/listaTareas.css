@@ -159,8 +159,7 @@ textarea {
 
 /* TAREAS */
 .contenedor .tareas {
-    padding: 10px;
-    margin: 10px;
+    max-width: 100%;
     background-color: rgb(177, 200, 211);
 }
 
@@ -173,35 +172,7 @@ textarea {
     margin: 10px 0px;
 }
 
-.eliminar {
-    margin:5px 10px;
-    border: none;
-    background-color: rgb(255, 0, 89);
-    color: #ffffff;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform ease 300ms;
-    padding: 8px;
-}
 
-.eliminar:hover {
-    transform: scale(1.3);
-}
-
-.completada {
-    margin:5px 10px;
-    border: none;
-    background-color: rgb(12, 183, 235);
-    color: #ffffff;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform ease 300ms;
-    padding: 8px;
-}
-
-.completada:hover {
-    transform: scale(1.3);
-}
 
 @media (max-width: 600px) {
     .contenedor {
@@ -209,4 +180,9 @@ textarea {
         grid-template-columns: 1fr;
         margin: 15px;
     }
+}
+.tareas {
+    padding: 10px;
+    margin: 10px;
+    background-color: rgb(177, 200, 211);
 }
