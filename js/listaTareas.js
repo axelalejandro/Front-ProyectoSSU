@@ -10,7 +10,9 @@ async function agregarTarea(e) {
     const hora = document.getElementById('hora').value;
     const fecha = document.getElementById('fecha').value;
     const data = { nombre, hora, fecha };
-    const url = 'http://localhost:3000/tareas';
+    const token = localStorage.getItem('token');
+    const id = convertirToken(token);
+    const url = `http://localhost:3000/tareas/${id}`;
     const resultado = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -40,7 +42,11 @@ async function obtenerTareas() {
     divTarea.innerHTML = '';
     const btnEliminar = document.querySelector('.eliminar');
     const btnCompletada = document.querySelector('.completada');
-    const url = 'http://localhost:3000/tareas';
+    // obtener el jwt del localstorage
+    const token = localStorage.getItem('token');
+    const id = convertirToken(token);
+    console.log(id)
+    const url = `http://localhost:3000/tareas/${id}`;
     const resultado = await fetch(url, {
         method: 'GET',
         headers: {
@@ -49,9 +55,8 @@ async function obtenerTareas() {
         }
     });
     const respuesta = await resultado.json();
+    console.log(respuesta)
     if(respuesta.ok === false){
-        btnEliminar.style.display = 'none';
-        btnCompletada.style.display = 'none';
         divTarea.textContent = respuesta.msg;
     }
     if(respuesta.ok === true){
@@ -152,4 +157,15 @@ function mostrarError(error) {
     alerta.textContent = error.msg;
     alerta.classList.add('text-danger');
     resultado.appendChild(alerta);
+}
+
+function convertirToken(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    const obj = JSON.parse(jsonPayload);
+    id = obj.id;
+    return id;
 }
