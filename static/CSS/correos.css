@@ -99,10 +99,11 @@ li a.active, li a:hover{
     border: 0;
     border-radius: 5px;
     padding: 0;
-    justify-content: center;
+    justify-content: space-between;
    
 }
 .boton-modal label{
+    display: flex;
     width: 900px;
     margin: 1px;
     padding: 10px 5px ;
@@ -111,7 +112,8 @@ li a.active, li a:hover{
     border-radius: 4px;
     cursor: pointer;
     transition: all 300ms ease;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
 }
 .boton-modal label:hover{
     background-color: rgba(255, 255, 255, 0.659);
