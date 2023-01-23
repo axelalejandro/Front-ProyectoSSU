@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <!-- Los iconos tipo Solid de Fontawesome-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+  <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  <!--Mi CSS-->
+  <link rel="stylesheet" href="../static/CSS/correos.css">
+  <title>Lista de tareas</title>
+</head>
+
+<body>
+  <nav>
+    <a href="#" class="enlace">
+      <img src="../static/IMG/aimLogo.jpg" class="logo" alt="">
+    </a>
+    <ul>
+      <li><a href="HomePage.html">Inicio</a></li>
+      <li><a href="#">Capitulos</a></li>
+      <li><a href="#">Correos</a></li>
+      <li><a href="listaTareas.html">lista de tareas</a></li>
+      <li><a href="#">Proyectos</a></li>
+      <li><a href="#">Departamentos</a></li>
+      <li><a href="#">Eventos</a></li>
+      <li><a href="#">Perfil</a></li>
+    </ul>
+  </nav>
+  <h1 >Correos</h1>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Enviar Correo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Para:</label>
+                  <input type="email" class="form-control" id="recipient-name" required>
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Asunto:</label>
+                  <input type="text" class="form-control" id="message-text" required>
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Mensaje:</label>
+                  <textarea class="form-control" id="message-text" rows="5" required></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary">Enviar Correo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+        Nuevo Correo
+        </button>
+
+  <!--Botones para seleccionar mensaje-->
+  <div class="card mx-auto d-flex shadow">
+    <div class="card-body" style="display: contents; justify-content: center;">
+      <!-- Button trigger modal -->
+      <button class="boton-modal mx-auto">
+        <label for="btn-modal">De: Mensaje1@gmail.com Mensaje: Hola este es un ejemplo del mensaje 1</label>
+      </button>
+      <button class="boton-modal mx-auto">
+        <label for="btn-modal">De: Mensaje2@gmail.com Mensaje: Hola este es un ejemplo del mensaje 2</label>
+      </button>
+    </div>
+  </div>
+  <input type="checkbox" name="" id="btn-modal">
+
+  <div class="container-modal">
+    <div class="content-modal">
+      <h2>De: Usuario@usuario.com</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Aut dolore ducimus,Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Aut dolore ducimus,Cupiditate enim dignissimos accusantium itaque commodi vitae sint sapiente.
+        laborum nesciunt sit ab beatae cumque aspernatur, iusto illum fugiat.
+        Cupiditate enim dignissimos accusantium itaque commodi vitae sint sapiente.
+
+      </p>
+      <div class="content-botones">
+        <div class="btn-responder">
+          <label for="btn-modal">Responder</label>
+        </div>
+        <div class="btn-cerrar">
+          <label for="btn-modal">Cerrar</label>
+        </div>
+      </div>
+    </div>
+    <label for="btn-modal" class="cerrar-Modal"></label>
+  </div>
+
+
+  
+
+</body>
+
+</html>
