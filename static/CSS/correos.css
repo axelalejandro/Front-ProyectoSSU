@@ -1,4 +1,6 @@
-
+textarea {
+    resize: none;
+  }
 body {
 
     margin: 0;
@@ -73,7 +75,7 @@ li a.active, li a:hover{
     justify-content: center;
 }
 
-.btn 
+.btn-nuevo
 {
     border-width: 0;
     border-color: transparent;
@@ -83,7 +85,7 @@ li a.active, li a:hover{
     margin-bottom: 30px;
     margin-top: 10px;
 }
-.btn:hover{
+.btn-nuevo:hover{
     border-color: transparent;
     border-width: 0;
     color: #ffffff;

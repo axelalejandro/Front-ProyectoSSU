@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
-  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <!--Mi CSS-->
+    <link rel="stylesheet" href="../static/CSS/correos.css">
 
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-
-  <!-- Los iconos tipo Solid de Fontawesome-->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
-  <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-  <!--Mi CSS-->
-  <link rel="stylesheet" href="../static/CSS/correos.css">
-  <title>Lista de tareas</title>
+    <title>Correos</title>
 </head>
 
 <body>
@@ -67,16 +66,16 @@
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
               <button type="button" class="btn btn-primary">Enviar Correo</button>
             </div>
           </div>
         </div>
       </div>
 
-      <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+      <button type="button" class="btn btn-nuevo" data-toggle="modal" data-target="#exampleModal">
         Nuevo Correo
-        </button>
+      </button>
 
   <!--Botones para seleccionar mensaje-->
   <div class="card mx-auto d-flex shadow">
