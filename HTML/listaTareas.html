@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
     <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -11,24 +14,37 @@
     <!-- Los iconos tipo Solid de Fontawesome-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
     <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!--Mi CSS-->
     <link rel="stylesheet" href="../static/CSS/listaTareas.css">
-    <title>Lista de tareas</title>
+    <title>HomePage</title>
 </head>
 <body>
-    <nav>
+   <nav>
+        
         <a href="#" class="enlace">
             <img src="../static/IMG/aimLogo.jpg" class="logo" alt="">
         </a>
         <ul>
             <li><a href="HomePage.html">Inicio</a></li>
             <li><a href="#">Capitulos</a></li>
-            <li><a href="#">Correos</a></li>
+            <li><a href="correos.html">Correos</a></li>
             <li><a href="listaTareas.html">lista de tareas</a></li>
             <li><a href="#">Proyectos</a></li>
             <li><a href="#">Departamentos</a></li>
             <li><a href="#">Eventos</a></li>
-            <li><a href="#">Perfil</a></li>
+            <li class="btn-group dropleft">
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Perfil
+                </button>
+                <div class="dropdown-menu p-0 m-0">
+                  <a class="text-dark m-0" href="#">Mi Perfil</a>
+                  <a class="text-dark m-0" href="#">Configuracion</a>
+                  <a class="text-dark m-0" href="#" onclick="cerrarSesion()">Cerrar Sesion</a>
+                </div>
+              </li>
         </ul>
    </nav>
     <h1 >Lista de tareas</h1>
@@ -54,6 +70,7 @@
             </div>
 
             <button class="btn btn-primary" type="submit" id="agregar-tarea">Agregar</button>
+            <div class="botones-editar"></div>
         </form>
 
         <div class="tareas container w-auto">

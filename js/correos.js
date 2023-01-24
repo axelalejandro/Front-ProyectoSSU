@@ -26,8 +26,6 @@ async function enviar(e) {
         }
     });
     const respuesta = await resultado.json();
-    console.log(data)
-    console.log(respuesta)
     if (respuesta.ok === 'errores') {
         limpiarHTML();
         mostrarErrores(respuesta.errores);

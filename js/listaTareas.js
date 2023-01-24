@@ -33,6 +33,10 @@ async function agregarTarea(e) {
         return
     }
     obtenerTareas();
+    // limpiar formulario
+    document.getElementById('descripcion').value = '';
+    document.getElementById('hora').value = '';
+    document.getElementById('fecha').value = '';
 }
 
 obtenerTareas();
@@ -40,12 +44,9 @@ async function obtenerTareas() {
     // 
     const divTarea = document.querySelector('.item-tarea');
     divTarea.innerHTML = '';
-    const btnEliminar = document.querySelector('.eliminar');
-    const btnCompletada = document.querySelector('.completada');
     // obtener el jwt del localstorage
     const token = localStorage.getItem('token');
     const id = convertirToken(token);
-    console.log(id)
     const url = `http://localhost:3000/tareas/${id}`;
     const resultado = await fetch(url, {
         method: 'GET',
@@ -55,7 +56,6 @@ async function obtenerTareas() {
         }
     });
     const respuesta = await resultado.json();
-    console.log(respuesta)
     if(respuesta.ok === false){
         divTarea.textContent = respuesta.msg;
     }
@@ -97,8 +97,74 @@ function mostrarTareas(tareas) {
 }
 
 async function editarTarea(id) {
+    const url = `http://localhost:3000/tareas/obtener-tarea/${id}`;
+    const resultado = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+    const respuesta = await resultado.json();
+    if(respuesta.ok === false){
+        return
+    }
+    const tarea = respuesta.tarea;
+    const descripcion = document.querySelector('#descripcion');
+    const horaTarea = document.querySelector('#hora');
+    const fechaTarea = document.querySelector('#fecha');
+    descripcion.value = tarea.nombre;
+    horaTarea.value = tarea.hora;
+    // formatear fecha
+    const fecha = new Date(tarea.fecha);
+    const dia = fecha.getDate();
+    const mes = fecha.getMonth() + 1;
+    const anio = fecha.getFullYear();
+    const fechaFormateada = `${anio}-${mes < 10 ? `0${mes}` : mes}-${dia < 10 ? `0${dia}` : dia}`;
+    fechaTarea.value = fechaFormateada;
+    const btnGuardar = document.querySelector('#agregar-tarea');
+    btnGuardar.remove();
+    const divBotones = document.querySelector('.botones-editar');
+    // editarTareaDB(tarea.id, tarea.nombre, tarea.hora, tarea.fecha);
+    divBotones.innerHTML = `
+    <button class="btn btn-primary" id="editar-tarea" onclick="editarTareaDB(${id})">Guardar Cambios</button>
+    <button class="btn btn-danger" id="cancelar" onclick="obtenerTareas()">Cancelar</button>
+    `
+}
+
+async function editarTareaDB(id) {
+    const descripcion = document.querySelector('#descripcion');
+    const horaTarea = document.querySelector('#hora');
+    const fechaTarea = document.querySelector('#fecha');
+    nombre = descripcion.value;
+    hora = horaTarea.value;
+    fecha = fechaTarea.value;
+
+    const url = `http://localhost:3000/tareas/${id}`;
+    const data = {
+        nombre,
+        hora,
+        fecha
+    }
+    const resultado = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data)
+    });
+    const respuesta = await resultado.json();
+    if(respuesta.ok === false){
+        limpiarHTML();
+        mostrarError(respuesta);
+    }
+    // obtenerTareas();
 
 }
+    
+
+
 async function eliminarTarea(id)  {
     const url = `http://localhost:3000/tareas/${id}`;
     const resultado = await fetch(url, {
@@ -127,7 +193,6 @@ async function completarTarea(id) {
     const respuesta = await resultado.json();
     if(respuesta.ok === false){
         limpiarHTML();
-        console.log(respuesta);
     }
 
     obtenerTareas();
