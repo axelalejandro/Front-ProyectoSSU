@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <!--Mi CSS-->
+    <link rel="stylesheet" href="../static/CSS/perfil.css">
+
+    <title>Perfil</title>
+</head>
+
+<body>
+    <nav>
+        <a href="#" class="enlace">
+            <img src="../static/IMG/aimLogo.jpg" class="logo" alt="">
+        </a>
+        <ul>
+            <li><a href="HomePage.html">Inicio</a></li>
+            <li><a href="#">Capitulos</a></li>
+            <li><a href="correos.html">Correos</a></li>
+            <li><a href="listaTareas.html">lista de tareas</a></li>
+            <li><a href="#">Proyectos</a></li>
+            <li><a href="#">Departamentos</a></li>
+            <li><a href="#">Eventos</a></li>
+            <li class="btn-group dropleft">
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Perfil
+                </button>
+                <div class="dropdown-menu p-0 m-0">
+                    <a class="text-dark m-0" href="#">Mi Perfil</a>
+                    <a class="text-dark m-0" href="#">Configuracion</a>
+                    <a class="text-dark m-0" href="#" onclick="cerrarSesion()">Cerrar Sesion</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div class="profile-section">
+        <div class="profile-picture">
+            <img src="../static/IMG/profile.png" alt="Foto de Perfil">
+        </div>
+        <div class="profile-info">
+            <h4 class="title">Informacion Personal</h4>
+            <p>ID AIM: </p><input type="text" placeholder="6763tGHF4527t" disabled ></input>
+            <p>Nombre: </p><input type="text" placeholder="Jose Luis Maldonado Gonzalez" disabled ></input>
+            <p>Correo Electronico: </p><input type="email" placeholder="Jolu@gmail.com" disabled></input>
+            <p>Telefono: </p><input type="tel" placeholder="4621110011" disabled></input>
+
+            <h4 class="title">Puesto</h4>
+            <p>Asignado:</p><input type="text" placeholder="Encargado de diseño" disabled ></input>
+            <h4 class="title">Datos de la cuenta</h4>
+            <h4 class="title">Conocimientos</h4>
+            <h4 class="title">Capitulos</h4>
+            
+        </div>
+        <button class="btn btn-info" id="btnEditar">Editar</button>
+        
+    </div>
+
+    <section></section>
+    <script src="/js/auth.js"></script>
+    <script src="../js/homePage.js"></script>
+</body>
+
+</html>
