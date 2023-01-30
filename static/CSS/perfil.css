@@ -97,9 +97,6 @@ li a.active, li a:hover{
   .profile-info input:disabled{
     background-color:rgba(244, 244, 244, 0.693);
   }
-  .boton{
-    
-  }
   #btnEditar{
     margin-top: 20px;
     margin-left: 320px;
