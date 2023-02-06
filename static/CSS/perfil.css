@@ -7,6 +7,9 @@ body{
     background: url(../IMG/background.jpg) no-repeat center center  fixed;
     background-size: cover;
 }
+textarea{
+    resize: none;
+}
 nav{
     
     height: 80px;
@@ -47,7 +50,8 @@ li a.active, li a:hover{
 }
 
 
-.profile-section {
+.profile-section__render {
+    width: auto;
     display: flex;
     align-items:flex-start;
     margin: 40px 80px;
@@ -94,11 +98,27 @@ li a.active, li a:hover{
     margin-top: 0px;
     margin-bottom: 5px;
   }
+  .profile-info textarea{
+    border-color: transparent;
+    width: 350px;
+    color: white;
+    border-radius: 5px;
+    margin-left: 60px;
+    margin-top: 0px;
+    margin-bottom: 5px;
+  }
   .profile-info input:disabled{
     background-color:rgba(244, 244, 244, 0.693);
   }
+  .profile-info textarea:disabled{
+    background-color:rgba(244, 244, 244, 0.693);
+  }
   #btnEditar{
-    margin-top: 20px;
-    margin-left: 320px;
-    
+    position: absolute;
+    top: 170px;
+    right: 180px;
+    padding: 10px;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: bold;
   }
