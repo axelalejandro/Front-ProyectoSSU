@@ -92,7 +92,7 @@ li a.active, li a:hover{
   .profile-info input{
     border-color: transparent;
     width: 350px;
-    color: white;
+    /* color: white; */
     border-radius: 5px;
     margin-left: 60px;
     margin-top: 0px;
@@ -101,7 +101,7 @@ li a.active, li a:hover{
   .profile-info textarea{
     border-color: transparent;
     width: 350px;
-    color: white;
+    /* color: white; */
     border-radius: 5px;
     margin-left: 60px;
     margin-top: 0px;
@@ -114,6 +114,15 @@ li a.active, li a:hover{
     background-color:rgba(244, 244, 244, 0.693);
   }
   #btnEditar{
+    position: absolute;
+    top: 170px;
+    right: 180px;
+    padding: 10px;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .btnGuardar{
     position: absolute;
     top: 170px;
     right: 180px;
