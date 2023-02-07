@@ -1,6 +1,8 @@
 const divPerfil = document.querySelector('.profile-section__render');
 const btnEditar = document.querySelector('#btnEditar');
 const btnGuardar = document.querySelector('#btnGuardar');
+const divResultado = document.querySelector('.resultado');
+
 cargarPerfil();
 async function cargarPerfil() {
 
@@ -18,81 +20,152 @@ async function cargarPerfil() {
     const respuesta = await resultado.json();
     if(respuesta.ok === true) {
         const { usuario } = respuesta;
-        const { AIMID, nombre, email, conocimientos, intereses, gradoEstudios } = usuario;
-        divPerfil.innerHTML = `
-        <div class="profile-picture">
-            <img src="../static/IMG/profile.png" alt="Foto de Perfil">
-        </div>
-        <div class="profile-info">
-            <h4 class="title">Informacion Personal</h4>
-            <p>ID AIM: </p><input type="text" placeholder="${AIMID}" disabled ></input>
-            <p>Nombre: </p><input type="text" placeholder="${nombre}" disabled ></input>
-            <p>Correo Electronico: </p><input type="email" placeholder="${email}" disabled></input>
-            <p>Grado: </p><input type="text" placeholder="${gradoEstudios}" disabled></input>
+        const { AIMID, nombre, email, ciudad, conocimientos, intereses, gradoEstudios, fechaNacimiento, suscripcion } = usuario;
+        const AIMIDInput = document.querySelector('.AIMID');
+        const nombreInput = document.querySelector('.nombre');
+        const emailInput = document.querySelector('.email');
+        const gradoInput = document.querySelector('.grado');
+        const fechaInput = document.querySelector('.fecha');
+        const suscripcionInput = document.querySelector('.suscripcion');
+        const conocimientosInput = document.querySelector('.conocimientos');
+        const interesesInput = document.querySelector('.intereses');
+        const ciudadInput = document.querySelector('.ciudad');
+        // formatear la fecha de nacimiento a español en string
+        fechaFormateada = formatearFecha(fechaNacimiento);
 
-            <h4 class="title">Puesto</h4>
-            <p>Asignado:</p><input type="text" placeholder="Encargado de diseño" disabled ></input>
-            <h4 class="title">Datos de la cuenta</h4>
-            <h4 class="title">Conocimientos</h4>
-            <p>Conocimientos:</p><textarea placeholder="${conocimientos}" disabled ></textarea>
-            <p>Intereses:</p><textarea placeholder="${intereses}" disabled ></textarea>
-            <h4 class="title">Capitulos</h4>
-            
-        </div>
-        `
+        if(suscripcion === true) {
+            suscripcionInput.value = 'Activa';
+        }
+        else {
+            suscripcionInput.value = 'Inactiva';
+        }
+        AIMIDInput.value = AIMID;
+        nombreInput.value = nombre;
+        emailInput.value = email;
+        gradoInput.value = gradoEstudios;
+        fechaInput.value = fechaFormateada;
+        conocimientosInput.value = conocimientos;
+        interesesInput.value = intereses;
+        ciudadInput.value = ciudad;
     }
 } 
 
 btnEditar.addEventListener('click', editarPerfil);
 
-async function editarPerfil() {
-    // ocultar el boton de editar
-    btnEditar.style.display = 'none';
-    const token = localStorage.getItem('token');
+async function editarPerfil(e) {
+    e.preventDefault();
+    limpiarHTML();
+    const nombreInput = document.querySelector('.nombre');
+    const emailInput = document.querySelector('.email');
+    const gradoInput = document.querySelector('.grado');
+    const gradoInputSelect = document.querySelector('#grado');
+    const fechaInput = document.querySelector('.fecha');
+    const suscripcionInput = document.querySelector('.suscripcion');
+    const conocimientosInput = document.querySelector('.conocimientos');
+    const interesesInput = document.querySelector('.intereses');
+    const ciudadInput = document.querySelector('.ciudad');
+    // quitar input de suscripcion
+    gradoInput.classList.add('d-none');
+    gradoInputSelect.classList.add('d-block');
+    gradoInputSelect.value = gradoInput.value;
+    nombreInput.disabled = false;
+    emailInput.disabled = false;
+    gradoInput.disabled = false;
+    fechaInput.disabled = false;
+    conocimientosInput.disabled = false;
+    interesesInput.disabled = false;
+    ciudadInput.disabled = false;
+    btnGuardar.classList.remove('d-none');
+    btnEditar.classList.add('d-none');
+    btnGuardar.addEventListener('click', guardarPerfilDB);
+}
+
+async function guardarPerfilDB(e) {
+    e.preventDefault();
+    const nombreInput = document.querySelector('.nombre');
+    const emailInput = document.querySelector('.email');
+    const gradoInputSelect = document.querySelector('#grado');
+    const fechaInput = document.querySelector('.fecha');
+    const suscripcionInput = document.querySelector('.suscripcion');
+    if(suscripcionInput.value === 'Activa') {
+        suscripcionInput.value = true;
+    } else {
+        suscripcionInput.value = false;
+    }
+    const conocimientosInput = document.querySelector('.conocimientos');
+    const interesesInput = document.querySelector('.intereses');
+    const ciudadInput = document.querySelector('.ciudad');
+    const token = localStorage.getItem('token'); 
     const id = convertirToken(token);
-    const url = `http://localhost:3000/auth/obtener-usuario/${id}`;
+    const url = `http://localhost:3000/auth/editar-perfil/${id}`;
     const resultado = await fetch(url, {
-        method: 'GET',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+        },
+        body: JSON.stringify({
+            nombre: nombreInput.value,
+            email: emailInput.value,
+            gradoEstudios: gradoInputSelect.value,
+            fechaNacimiento: fechaInput.value,
+            suscripcion: suscripcionInput.value,
+            conocimientos: conocimientosInput.value,
+            intereses: interesesInput.value,
+            ciudad: ciudadInput.value
+        })
     });
     const respuesta = await resultado.json();
-    if(respuesta.ok === true) {
-        const { usuario } = respuesta;
-        const { AIMID, nombre, email, conocimientos, intereses, gradoEstudios } = usuario;
-        divPerfil.innerHTML = `
-        <div class="profile-picture">
-            <img src="../static/IMG/profile.png" alt="Foto de Perfil">
-        </div>
-        <div class="profile-info">
-            <h4 class="title">Informacion Personal</h4>
-            <p>ID AIM: </p><input type="text" placeholder="${AIMID}" disabled ></input>
-            <p>Nombre: </p><input type="text" placeholder="nombre" value="${nombre}"></input>
-            <p>Correo Electronico: </p><input type="email" placeholder="email" value="${email}" ></input>
-            <p>Grado: </p><input type="text" placeholder="grado de estudios" value="${gradoEstudios}" ></input>
-
-            <h4 class="title">Puesto</h4>
-            <p>Asignado:</p><input type="text" placeholder="Encargado de diseño" disabled ></input>
-            <h4 class="title">Datos de la cuenta</h4>
-            <h4 class="title">Conocimientos</h4>
-            <p>Conocimientos:</p><textarea placeholder="conocimientos" value="">${conocimientos}</textarea>
-            <p>Intereses:</p><textarea placeholder="intereses" value="" >${intereses}</textarea>
-            <h4 class="title">Capitulos</h4>
-            <div class="w-100 d-flex justify-content-center align-items-center">
-                <button class="btn btn-success pt-2 p-2 font-weight-bold text-uppercase" onclick="guardarDatos(usuario)">Guardar</button>
-            </div>
-        </div>
-        `
-    } else {
-        console.log('error');
+    if(respuesta.ok === "errores") {
+        limpiarHTML();
+        divResultado.classList.add('d-flex');
+        mostrarErrores(respuesta.errors);
+        window.scrollTo(0, 0);
     }
+    if(respuesta.ok === true) {
+        // recargar la pagina
+        window.scrollTo(0, 0);
+        mostrarModal('Perfil actualizado correctamente');
+    }
+        
 }
 
-async function guardarDatos() {
-    // obtener los datos del formulario
+function mostrarModal(mensaje) {
+    const modalFondo = document.createElement('div');
+    modalFondo.classList.add('fondo-modal');
+    const modal = document.createElement('div');
+    modal.classList.add('modal-active');
+    modal.innerHTML = `
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <p>${mensaje}</p>
+            <p class="icon-modal">✅</p>
+        </div>
+    `;
+    // crear boton para cerrar modal
+    const btnCerrar = document.createElement('button');
+    btnCerrar.classList.add('btn', 'btn-cerrar');
+    btnCerrar.textContent = 'X';
+    modal.appendChild(btnCerrar);
+    modalFondo.appendChild(modal);
+    document.body.appendChild(modalFondo);
+    modalFondo.addEventListener('click', () => {
+        modalFondo.remove();
+        window.location.reload();
+        cargarPerfil();
+    });
+}
 
+
+function formatearFecha(fecha) {
+    const fechaNacimientoFormateada = new Date(fecha).toLocaleDateString('es-ES');
+    const fechaString = fechaNacimientoFormateada.split('/');
+    const dia = fechaString[0];
+    const mes = fechaString[1];
+    const anio = fechaString[2];
+    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const mesString = meses[mes - 1];
+    const fechaNacimientoFormateadaString = `${dia} de ${mesString} de ${anio}`;
+    return fechaNacimientoFormateadaString;
 }
 
 function convertirToken(token) {
@@ -107,8 +180,8 @@ function convertirToken(token) {
 }
 
 function limpiarHTML() {
-    while (resultado.firstChild) {
-        resultado.removeChild(resultado.firstChild);
+    while (divResultado.firstChild) {
+        divResultado.removeChild(divResultado.firstChild);
     }
 }
 
@@ -117,10 +190,9 @@ function mostrarErrores(errors) {
     errors.forEach((error) => {
         const alerta = document.createElement('small');
         alerta.textContent = error.msg;
-        alerta.classList.add('text-danger');
-        resultado.appendChild(alerta);
-        const br = document.createElement('br');
-        resultado.appendChild(br);
+        alerta.classList.add('text-danger', 'font-weight-bold', 'text-uppercase', 'alert-heading', 'text-center' );
+        divResultado.appendChild(alerta);
+
     });
 
 }

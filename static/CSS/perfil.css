@@ -55,9 +55,25 @@ li a.active, li a:hover{
     display: flex;
     align-items:flex-start;
     margin: 40px 80px;
+    padding: 14px;
     padding-bottom: 40px;
     background-color: #fffafa3f;
     border-radius: 20px;
+    justify-content: space-between;
+
+  }
+
+  .profile-section__render .buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+  }
+  .buttons-container button {
+    width: 250px;
+    margin: 6px;
   }
   
   .profile-picture {
@@ -70,6 +86,7 @@ li a.active, li a:hover{
   
   .profile-picture img {
     width: 100%;
+    margin-top: 20px;
   }
   
   .profile-info {
@@ -89,7 +106,7 @@ li a.active, li a:hover{
     margin-top: 10px;
     margin-bottom: 0px;
   }
-  .profile-info input{
+  .profile-info input, .profile-info select{
     border-color: transparent;
     width: 350px;
     /* color: white; */
@@ -113,15 +130,7 @@ li a.active, li a:hover{
   .profile-info textarea:disabled{
     background-color:rgba(244, 244, 244, 0.693);
   }
-  #btnEditar{
-    position: absolute;
-    top: 170px;
-    right: 180px;
-    padding: 10px;
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: bold;
-  }
+
   .btnGuardar{
     position: absolute;
     top: 170px;
@@ -130,4 +139,45 @@ li a.active, li a:hover{
     text-transform: uppercase;
     font-size: 16px;
     font-weight: bold;
+  }
+  .fondo-modal {
+    /* crear un fondo oscuro para el modal */
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+  .modal-active {
+    width: 500px;
+    height: 300px;
+    color: #23bd33;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  .btn-cerrar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .icon-modal {
+    font-size: 50px;
   }
