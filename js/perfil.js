@@ -1,7 +1,9 @@
 const divPerfil = document.querySelector('.profile-section__render');
 const btnEditar = document.querySelector('#btnEditar');
 const btnGuardar = document.querySelector('#btnGuardar');
+const btnCancelar = document.querySelector('#btnCancelar');
 const divResultado = document.querySelector('.resultado');
+let fechaCalendario;
 
 cargarPerfil();
 async function cargarPerfil() {
@@ -30,8 +32,8 @@ async function cargarPerfil() {
         const conocimientosInput = document.querySelector('.conocimientos');
         const interesesInput = document.querySelector('.intereses');
         const ciudadInput = document.querySelector('.ciudad');
-        // formatear la fecha de nacimiento a español en string
-        fechaFormateada = formatearFecha(fechaNacimiento);
+        fechaCalendario = formatearFecha(fechaNacimiento).fecha;
+        fechaFormateada = formatearFecha(fechaNacimiento).fechaNacimientoFormateadaString;
 
         if(suscripcion === true) {
             suscripcionInput.value = 'Activa';
@@ -60,24 +62,41 @@ async function editarPerfil(e) {
     const gradoInput = document.querySelector('.grado');
     const gradoInputSelect = document.querySelector('#grado');
     const fechaInput = document.querySelector('.fecha');
+    const fechaEdit = document.querySelector('.fecha-edit');
     const suscripcionInput = document.querySelector('.suscripcion');
     const conocimientosInput = document.querySelector('.conocimientos');
     const interesesInput = document.querySelector('.intereses');
     const ciudadInput = document.querySelector('.ciudad');
+    // formatear fecha para que se vea en el input
+    const fecha = new Date(fechaCalendario);
+    const dia = fecha.getDate();
+    const mes = fecha.getMonth() + 1;
+    const anio = fecha.getFullYear();
+    const fechaFormateada = `${anio}-${mes < 10 ? `0${mes}` : mes}-${dia < 10 ? `0${dia}` : dia}`;
+
+
     // quitar input de suscripcion
     gradoInput.classList.add('d-none');
     gradoInputSelect.classList.add('d-block');
     gradoInputSelect.value = gradoInput.value;
+    fechaInput.classList.add('d-none');
+    fechaEdit.classList.add('d-block');
+    fechaEdit.value = fechaFormateada;
     nombreInput.disabled = false;
     emailInput.disabled = false;
     gradoInput.disabled = false;
-    fechaInput.disabled = false;
+    // fechaInput.disabled = false;
     conocimientosInput.disabled = false;
     interesesInput.disabled = false;
     ciudadInput.disabled = false;
     btnGuardar.classList.remove('d-none');
+    btnCancelar.classList.remove('d-none');
     btnEditar.classList.add('d-none');
     btnGuardar.addEventListener('click', guardarPerfilDB);
+    btnCancelar.addEventListener('click', () => {
+        window.scrollTo(0, 0);
+        window.location.reload();
+    });
 }
 
 async function guardarPerfilDB(e) {
@@ -86,6 +105,7 @@ async function guardarPerfilDB(e) {
     const emailInput = document.querySelector('.email');
     const gradoInputSelect = document.querySelector('#grado');
     const fechaInput = document.querySelector('.fecha');
+    const fechaEdit = document.querySelector('.fecha-edit');
     const suscripcionInput = document.querySelector('.suscripcion');
     if(suscripcionInput.value === 'Activa') {
         suscripcionInput.value = true;
@@ -108,7 +128,7 @@ async function guardarPerfilDB(e) {
             nombre: nombreInput.value,
             email: emailInput.value,
             gradoEstudios: gradoInputSelect.value,
-            fechaNacimiento: fechaInput.value,
+            fechaNacimiento: fechaEdit.value,
             suscripcion: suscripcionInput.value,
             conocimientos: conocimientosInput.value,
             intereses: interesesInput.value,
@@ -165,7 +185,7 @@ function formatearFecha(fecha) {
     const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
     const mesString = meses[mes - 1];
     const fechaNacimientoFormateadaString = `${dia} de ${mesString} de ${anio}`;
-    return fechaNacimientoFormateadaString;
+    return {fecha , fechaNacimientoFormateadaString};
 }
 
 function convertirToken(token) {

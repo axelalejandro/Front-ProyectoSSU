@@ -72,6 +72,8 @@
                     <option value="doctorado">Doctorado</option>
                 </select>
                 <p>Fecha: </p><input class="fecha" type="text" placeholder="" disabled></input>
+                <!-- poner campo para ingresar la fecha -->
+                <input class="fecha-edit" type="date" hidden>
                 <p>Ciudad: </p><input class="ciudad" type="text" placeholder="" disabled></input>
 
                 <h4 class="title">Puesto</h4>
@@ -83,7 +85,8 @@
                 <p>Intereses:</p><textarea class="intereses" placeholder="" disabled ></textarea>
                 <h4 class="title">Capitulos</h4>
                 <div class="w-100 d-flex justify-content-center">
-                    <button class="btn btn-success d-none w-75" id="btnGuardar">Guardar</button> 
+                    <button class="btn btn-success d-none w-50 p-3 mr-3" id="btnGuardar">Guardar</button> 
+                    <button class="btn btn-danger d-none w-50 p-3" id="btnCancelar">Cancelar</button> 
                 </div>  
             </div>
             <div class="buttons-container">
