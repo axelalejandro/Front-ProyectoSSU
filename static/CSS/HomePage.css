@@ -28,3 +28,41 @@
 
 }
 
+<<<<<<< HEAD
+=======
+footer {
+    background: #00000031;
+    color: #fff;
+    padding: 0 20px;
+    text-align: center;
+    font-size: 12px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.footer-section__info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    
+}
+.footer-section__dev {
+    width: 100%;
+    border-top: 1px solid #fff;
+    padding-top: 10px;
+    
+}
+
+.redes li {
+    list-style: none;
+}
+.redes li a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+>>>>>>> b0d41094b483afe75b7b5d6bae57039b72922d3b
