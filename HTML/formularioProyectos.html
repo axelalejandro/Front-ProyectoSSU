@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!--Mi CSS-->
+    <link rel="stylesheet" href="../static/CSS/generales.css">
+    <link rel="stylesheet" href="../static/CSS/proyectosGenerales.css">
+    <title>Proyectos</title>
+</head>
+<body>
+   <nav>
+        
+        <a href="HomePage.html" class="enlace">
+            <img src="../static/IMG/aimLogo.jpg" class="logo" alt="">
+        </a>
+        <ul>
+            <li><a href="HomePage.html">Inicio</a></li>
+            <li><a href="#">Capitulos</a></li>
+            <li><a href="correos.html">Correos</a></li>
+            <li><a href="listaTareas.html">lista de tareas</a></li>
+            <li><a href="#">Proyectos</a></li>
+            <li><a href="#">Departamentos</a></li>
+            <li><a href="#">Eventos</a></li>
+            <li class="btn-group dropleft">
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Perfil
+                </button>
+                <div class="dropdown-menu p-0 m-0">
+                  <a class="text-dark m-0" href="perfil.html">Mi Perfil</a>
+                  <a class="text-dark m-0" href="#">Configuracion</a>
+                  <a class="text-dark m-0" href="#" onclick="cerrarSesion()">Cerrar Sesion</a>
+                </div>
+              </li>
+        </ul>
+   </nav>
+   <!-- barra lateral con las opciones de nuevo proyecto, proyectos validados, proyectos por validar-->
+   <main class="w-100 d-flex justify-content-between">
+       <aside class="barra-lateral d-flex flex-column p-2">
+           <ul class="barra-lateral__container">
+               <li class="mb-2">Mis proyectos</li>
+               <li class="mb-2">Agregar Proyecto</li>
+               <li class="mb-2">Proyectos Validados</li>
+               <li class="mb-2">Proyectos por Validar</li>
+            </ul>
+        </aside>
+        <section class="w-75 d-flex flex-column justify-content-center align-items-center">
+            <h2 class="text-white">Proyectos</h2>
+            <form class=" formulario w-75 h-75 ">
+                <!-- el fomulario tendra los siguientes campos: nombre, personal, actividades, responsable -->
+                <label for="nombre">
+                    <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre del proyecto">
+                </label>
+                <label for="personal">
+                    <input class="form-control" type="text" name="personal" id="personal" placeholder="Personal involucrado">
+                </label>
+                <label for="actividades">
+                    <input class="form-control" type="text" name="actividades" id="actividades" placeholder="Actividades">
+                </label>
+                <label for="responsable">
+                    <input class="form-control" type="text" name="responsable" id="responsable" placeholder="Responsable">
+                </label>
+                <button type="submit" class="btn btn-primary">Agregar</button>
+            </form>
+        </section>
+    </main>
+
+
+
+   <footer>
+    <section class="footer-section__info">
+
+      <div>
+        <h1>AIM</h1>
+        <small class="mb-2">Asociación de ingenieros mecatrónicos</small>
+      </div>
+      <div class="d-flex flex-column">
+        <a href="#">Terminos y condiciones</a>
+        <a href="#">Politicas de privacidad</a>
+      </div>
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <h3>Redes Sociales</h3>
+        <ul class="redes w-100 p-0 d-flex justify-content-between">
+          <li><a href="https://www.facebook.com/AsoIngMec" target="_blank"><img src="../static/IMG/facebook.png" alt="Facebook"></a></li>
+          <li><a href="https://www.linkedin.com/company/asociacion-de-ingenieros-mecatronicos/" target="_blank"><img src="../static/IMG/linkedin.png" alt="Linkedin"></a></li>
+          <li><a href="https://www.youtube.com/@asociaciondeingenierosmeca3773" target="_blank"><img src="../static/IMG/youtube.png" alt="Youtube"></a></li>
+        </ul>
+      </div>
+    </section>
+    <section class="footer-section__dev">
+      <p>© 2023 AIM. Todos los derechos reservados.</p>
+    </section>
+   </footer>
+    <script src="/js/auth.js"></script>
+    <script src="../js/homePage.js"></script>
+
+  
+</body>
+</html>

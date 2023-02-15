@@ -32,8 +32,8 @@ async function cargarPerfil() {
         const conocimientosInput = document.querySelector('.conocimientos');
         const interesesInput = document.querySelector('.intereses');
         const ciudadInput = document.querySelector('.ciudad');
-        fechaCalendario = formatearFecha(fechaNacimiento).fecha;
-        fechaFormateada = formatearFecha(fechaNacimiento).fechaNacimientoFormateadaString;
+        fechaCalendario = fechaNacimiento;
+        fechaFormateada = formatearFecha(fechaNacimiento).fechaNacimientoFormateadaString;        
 
         if(suscripcion === true) {
             suscripcionInput.value = 'Activa';
@@ -68,13 +68,10 @@ async function editarPerfil(e) {
     const interesesInput = document.querySelector('.intereses');
     const ciudadInput = document.querySelector('.ciudad');
     // formatear fecha para que se vea en el input
-    const fecha = new Date(fechaCalendario);
-    const dia = fecha.getDate();
-    const mes = fecha.getMonth() + 1;
-    const anio = fecha.getFullYear();
-    const fechaFormateada = `${anio}-${mes < 10 ? `0${mes}` : mes}-${dia < 10 ? `0${dia}` : dia}`;
-
-
+    // fechaCalendario 22-10-2021
+    // fechaFormateada 2021-10-22
+    const fechaFormateada = fechaCalendario.split('-').reverse().join('-');
+    
     // quitar input de suscripcion
     gradoInput.classList.add('d-none');
     gradoInputSelect.classList.add('d-block');
@@ -177,15 +174,13 @@ function mostrarModal(mensaje) {
 
 
 function formatearFecha(fecha) {
-    const fechaNacimientoFormateada = new Date(fecha).toLocaleDateString('es-ES');
-    const fechaString = fechaNacimientoFormateada.split('/');
-    const dia = fechaString[0];
-    const mes = fechaString[1];
-    const anio = fechaString[2];
-    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-    const mesString = meses[mes - 1];
-    const fechaNacimientoFormateadaString = `${dia} de ${mesString} de ${anio}`;
-    return {fecha , fechaNacimientoFormateadaString};
+    const fechaFormateada = fecha.split('-');
+    const dia = fechaFormateada[0];
+    const mes = fechaFormateada[1];
+    const anio = fechaFormateada[2];
+    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const fechaNacimientoFormateadaString = `${dia} de ${meses[mes - 1]} de ${anio}`;
+    return {fecha, fechaNacimientoFormateadaString};
 }
 
 function convertirToken(token) {

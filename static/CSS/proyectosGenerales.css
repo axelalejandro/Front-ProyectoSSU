@@ -1,0 +1,45 @@
+.barra-lateral {
+    background: rgb(34, 46, 65);
+}
+.barra-lateral__container {
+    padding: 16px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.barra-lateral__container li {
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;    
+}
+.barra-lateral__container li:hover {
+    display: block;
+    background-color: #CDF938;
+    color: rgb(8, 8, 8);
+    transition: .4s;
+    border-radius: 4px;
+}
+.formulario{
+    width: 75%;
+    height: auto;
+    background: rgb(34, 46, 65);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #000;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+input {
+    height: 42px;
+    font-size: 18px;
+    border: 0;
+    padding: 54px;
+    border-radius: 15px;
+}
