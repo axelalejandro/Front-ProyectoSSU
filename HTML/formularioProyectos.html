@@ -48,38 +48,46 @@
               </li>
         </ul>
    </nav>
-   <!-- barra lateral con las opciones de nuevo proyecto, proyectos validados, proyectos por validar-->
    <main class="w-100 d-flex justify-content-between">
        <aside class="barra-lateral d-flex flex-column p-2">
            <ul class="barra-lateral__container">
-               <li class="mb-2">Mis proyectos</li>
-               <li class="mb-2">Agregar Proyecto</li>
-               <li class="mb-2">Proyectos Validados</li>
-               <li class="mb-2">Proyectos por Validar</li>
+               <li class="mb-2 mis-proyectos-li">Mis proyectos</li>
+               <li class="mb-2 agregar-proyectos">Agregar Proyecto</li>
+               <li class="mb-2 proyectos-validados">Proyectos Validados</li>
+               <li class="mb-2 no-validados">Proyectos por Validar</li>
             </ul>
         </aside>
         <section class="w-75 d-flex flex-column justify-content-center align-items-center">
             <h2 class="text-white">Proyectos</h2>
-            <form class=" formulario w-75 h-75 ">
-                <!-- el fomulario tendra los siguientes campos: nombre, personal, actividades, responsable -->
-                <label for="nombre">
-                    <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre del proyecto">
-                </label>
-                <label for="personal">
-                    <input class="form-control" type="text" name="personal" id="personal" placeholder="Personal involucrado">
-                </label>
-                <label for="actividades">
-                    <input class="form-control" type="text" name="actividades" id="actividades" placeholder="Actividades">
-                </label>
-                <label for="responsable">
-                    <input class="form-control" type="text" name="responsable" id="responsable" placeholder="Responsable">
-                </label>
-                <button type="submit" class="btn btn-primary">Agregar</button>
-            </form>
+
+            <div class="mis-proyectos">
+              <h4 class="resultado-proyectos text-center pt-3"></h4>
+              <div class="proyecto">
+              </div>
+            </div>
+
+            <form class="formulario w-75 h-75 d-none" >
+              <div class="resultado"></div>
+              <!-- el fomulario tendra los siguientes campos: nombre, personal, actividades, responsable -->
+              <label for="nombre">
+                  <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Nombre del proyecto" value="">
+              </label>
+              <label for="descripcion">
+                  <input class="form-control" type="text" name="descripcion" id="descripcion" placeholder="Descripcion del proyecto" value="">
+              </label>
+              <label for="personal">
+                  <input class="form-control" type="text" name="personal" id="personal" placeholder="Personal involucrado" value="">
+              </label>
+              <label for="actividades">
+                  <input class="form-control" type="text" name="actividades" id="actividades" placeholder="Actividades" value="">
+              </label>
+              <label for="responsable">
+                  <input class="form-control" type="text" name="responsable" id="responsable" placeholder="Responsable" value="">
+              </label>
+              <button type="submit" class="btn btn-primary agregar-proyecto">Agregar</button>
+          </form>
         </section>
     </main>
-
-
 
    <footer>
     <section class="footer-section__info">
@@ -106,7 +114,7 @@
     </section>
    </footer>
     <script src="/js/auth.js"></script>
-    <script src="../js/homePage.js"></script>
+    <script src="../js/proyectosGenerales.js"></script>
 
   
 </body>
