@@ -63,11 +63,14 @@ input {
     display: none;
 }
 
-.mis-proyectos .proyecto {
+.mis-proyectos .proyecto-container {
     display: inline-block;
-    margin: 20px;
-    margin-top: 20px;
+    width: 94%;
+    margin: 10px;
     border: #fff solid 1px;
     padding: 20px;
     /* border: 1px solid transparent; */
+}
+.botones-proyecto{
+    height: 200px;
 }

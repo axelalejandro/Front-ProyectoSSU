@@ -7,9 +7,12 @@ const formulario = document.querySelector('.formulario');
 const agregarProyectoBtn = document.querySelector('.agregar-proyecto');
 const resultado = document.querySelector('.resultado');
 const divRespuesta = document.querySelector('.resultado-proyectos');
+const divProyecto = document.querySelector('.proyecto');
+
 misProyectos.addEventListener('click', mostrarProyectos);
 agregarProyecto.addEventListener('click', mostrarFormulario);
 agregarProyectoBtn.addEventListener('click', agregarProyectos);
+proyectosValidados.addEventListener('click', mostrarProyectosValidados);
 
 
 async function agregarProyectos(e) {
@@ -54,7 +57,8 @@ async function agregarProyectos(e) {
     if (respuesta.ok === true) {
         limpiarHTML();
         alert('Proyecto agregado correctamente');
-        mostrarProyectos();
+        // recargar la pagina
+        window.location.reload();
     }
 }
 
@@ -67,7 +71,6 @@ mostrarProyectos();
 async function mostrarProyectos() {
     divProyectos.classList.remove('d-none');
     formulario.classList.add('d-none');
-    const divProyecto = document.querySelector('.proyecto');
     const token = localStorage.getItem('token');
     const id = convertirToken(token).id;
     const url = `http://localhost:3000/proyectos/${id}}`
@@ -92,15 +95,70 @@ async function mostrarProyectos() {
         return;
     }
     if(respuesta.ok === true) {
-        divProyecto.innerHTML = `
-        <h4>${respuesta.nombre}</h4>
-        <p>${respuesta.descripcion}</p>
-        <p>${respuesta.personal}</p>
-        <p>${respuesta.actividades}</p>
-        <p>${respuesta.responsable}</p>
-        `;
+        mostrarProyectosHTML(respuesta.proyectos);
     }
     
+}
+
+async function mostrarProyectosValidados() {
+    divProyectos.classList.remove('d-none');
+    formulario.classList.add('d-none');
+    const token = localStorage.getItem('token');
+    const id = convertirToken(token).id;
+    const url = `http://localhost:3000/proyectos/${id}}?validado=true`
+    const resultado = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+    const respuesta = await resultado.json();
+    if(respuesta.ok === false){
+        while(divRespuesta.firstChild) {
+            divRespuesta.removeChild(divRespuesta.firstChild);
+        }
+        const mensaje = document.createElement('p');
+        mensaje.textContent = respuesta.msg;
+        mensaje.classList.add('text-danger');
+        divRespuesta.appendChild(mensaje);
+        divProyecto.classList.add('d-none');
+
+        return;
+    }
+    if(respuesta.ok === true) {
+        mostrarProyectosHTML(respuesta.proyectos);
+    }
+}
+
+
+
+function mostrarProyectosHTML(proyectos) {
+    limpiarHTML();
+    proyectos.forEach(proyecto => {
+        console.log(proyecto);
+        divProyecto.innerHTML += `
+        <div class="proyecto-container "> 
+            <h4 class="text-center">${proyecto.nombre}</h4>
+            <div class="d-flex justify-content-between">
+                <div> 
+                <p><strong>Descripción:</strong><br> ${proyecto.descripcion}</p>
+                <p><strong>Personal:</strong><br> ${proyecto.personal}</p>
+                <p><strong>Actividades:</strong><br> ${proyecto.actividades}</p>
+                <p><strong>Responsable:</strong><br> ${proyecto.responsable}</p>
+                </div>
+                <div class="botones-proyecto d-flex flex-column justify-content-between gap-10">
+                <button class="btn btn-primary">Editar</button>
+                <button class="btn btn-danger">Eliminar</button>
+                <button class="btn btn-secundary">Agregar actividad</button>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+            </div>
+        </div>
+        `;
+    });
 }
 function mostrarErrores(errors) {
   
