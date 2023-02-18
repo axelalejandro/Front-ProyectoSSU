@@ -13,7 +13,7 @@ misProyectos.addEventListener('click', mostrarProyectos);
 agregarProyecto.addEventListener('click', mostrarFormulario);
 agregarProyectoBtn.addEventListener('click', agregarProyectos);
 proyectosValidados.addEventListener('click', mostrarProyectosValidados);
-
+noValidados.addEventListener('click', mostrarProyectosNoValidados);
 
 async function agregarProyectos(e) {
     e.preventDefault();
@@ -126,7 +126,40 @@ async function mostrarProyectosValidados() {
 
         return;
     }
-    if(respuesta.ok === true) {
+    if(respuesta.ok === "validado") {
+        console.log(respuesta.proyectos);
+        mostrarProyectosHTML(respuesta.proyectos);
+    }
+}
+async function mostrarProyectosNoValidados() {
+    console.log('hola proyectos no validados');
+    divProyectos.classList.remove('d-none');
+    formulario.classList.add('d-none');
+    const token = localStorage.getItem('token');
+    const id = convertirToken(token).id;
+    const url = `http://localhost:3000/proyectos/${id}}?validado=false`
+    const resultado = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+    const respuesta = await resultado.json();
+    if(respuesta.ok === false){
+        while(divRespuesta.firstChild) {
+            divRespuesta.removeChild(divRespuesta.firstChild);
+        }
+        const mensaje = document.createElement('p');
+        mensaje.textContent = respuesta.msg;
+        mensaje.classList.add('text-danger');
+        divRespuesta.appendChild(mensaje);
+        divProyecto.classList.add('d-none');
+
+        return;
+    }
+    if(respuesta.ok === "noValidado") {
+        console.log(respuesta.proyectos);
         mostrarProyectosHTML(respuesta.proyectos);
     }
 }
@@ -135,11 +168,16 @@ async function mostrarProyectosValidados() {
 
 function mostrarProyectosHTML(proyectos) {
     limpiarHTML();
+    while(divProyecto.firstChild) {
+        divProyecto.removeChild(divProyecto.firstChild);
+    }
     proyectos.forEach(proyecto => {
-        console.log(proyecto);
         divProyecto.innerHTML += `
         <div class="proyecto-container "> 
-            <h4 class="text-center">${proyecto.nombre}</h4>
+            <div class="d-flex justify-content-between align-items-center m-2"> 
+                <h4 class="titulo-proyectos" >${proyecto.nombre} </h4> 
+                <small class="${proyecto.estado == 0 ? 'no-validado' : 'validado'}">${proyecto.estado == 0 ? 'No Validado' : 'Validado'}</small>
+            </div>
             <div class="d-flex justify-content-between">
                 <div> 
                 <p><strong>Descripción:</strong><br> ${proyecto.descripcion}</p>

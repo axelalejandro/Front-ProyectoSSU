@@ -74,3 +74,17 @@ input {
 .botones-proyecto{
     height: 200px;
 }
+.titulo-proyectos {
+    max-width: 290px;
+}
+
+.validado{
+    background-color: #08e53c;
+    padding: 4px;
+    border-radius: 8px;
+}
+.no-validado{
+    background-color: red;
+    padding: 4px;
+    border-radius: 8px;
+}
