@@ -16,6 +16,16 @@ async function obtenerProyectosRecientes() {
         }
     });
     const respuesta = await resultado.json();
+    if(respuesta.ok == false) {
+        while(proyectosContainer.firstChild) {
+            proyectosContainer.removeChild(proyectosContainer.firstChild);
+        }
+        const mensaje = document.createElement('p');
+        mensaje.textContent = respuesta.msg;
+        mensaje.classList.add('text-white', 'text-center', 'font-weight-bold', 'm-auto', 'fs-3');
+        proyectosContainer.appendChild(mensaje);
+        return;
+    }
     if(respuesta.ok == true) {
         mostrarProyectos(respuesta.proyectos);
     }

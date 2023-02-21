@@ -8,6 +8,7 @@ const agregarProyectoBtn = document.querySelector('.agregar-proyecto');
 const resultado = document.querySelector('.resultado');
 const divRespuesta = document.querySelector('.resultado-proyectos');
 const divProyecto = document.querySelector('.proyecto');
+const divActividades = document.querySelector('.actividades');
 
 misProyectos.addEventListener('click', mostrarProyectos);
 agregarProyecto.addEventListener('click', mostrarFormulario);
@@ -25,6 +26,7 @@ async function agregarProyectos(e) {
     const descripcion = document.querySelector('#descripcion').value;
     const personal = document.querySelector('#personal').value;
     const actividades = document.querySelector('#actividades').value;
+    const actividadesArray = [];
     const responsable = document.querySelector('#responsable').value;
     const data = {
         nombre,
@@ -67,8 +69,80 @@ async function mostrarFormulario() {
     divProyectos.classList.add('d-none');
 }
 
+obtenerPorcentaje();
+async function obtenerPorcentaje() {
+    const token = localStorage.getItem('token');
+    const id = convertirToken(token).id;
+    const url = `http://localhost:3000/actividades/${id}`;
+    const resultado = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+    const respuesta = await resultado.json();
+    if(respuesta.ok === false){
+        mostrarProyectos(respuesta.msg);
+    }
+    if(respuesta.ok === true) {
+        mostrarProyectos(respuesta);
+    }
+}
+
+async function obtenerActividades() {
+    console.log('hola');
+    const token = localStorage.getItem('token');
+    const id = convertirToken(token).id;
+    const url = `http://localhost:3000/actividades/${id}`;
+    const resultado = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+    const respuesta = await resultado.json();
+    if(respuesta.ok === false){
+        mostrarProyectos(respuesta.msg);
+    }
+    if(respuesta.ok === true) {
+        mostrarActvidadesHTML(respuesta.actividades)
+    }
+}
+
+function mostrarActvidadesHTML(actividades) {
+    limpiarHTML();
+    const div = document.createElement('div');
+    div.classList.add('col-12');
+    div.classList.add('col-md-6');
+    div.classList.add('col-lg-4');
+    div.classList.add('col-xl-3');
+    div.classList.add('mb-4');
+    div.classList.add('d-flex');
+    div.classList.add('justify-content-center');
+    div.classList.add('align-items-center');
+    div.classList.add('actividades');
+    div.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">${actividades.nombre}</h5>
+                <p class="card-text">${actividades.descripcion}</p>
+                <p class="card-text">${actividades.fechaInicio}</p>
+                <p class="card-text">${actividades.fechaFin}</p>
+                <p class="card-text">${actividades.porcentaje}</p>
+                <p class="card-text">${actividades.responsable}</p>
+                <p class="card-text">${actividades.estado}</p>
+                <p class="card-text">${actividades.proyectoId}</p>
+                <p class="card-text">${actividades.usuarioId}</p>
+            </div>
+        </div>
+    `;
+    divActividades.appendChild(div);
+}
+
 mostrarProyectos();
-async function mostrarProyectos() {
+async function mostrarProyectos(actividades) {
     divProyectos.classList.remove('d-none');
     formulario.classList.add('d-none');
     const token = localStorage.getItem('token');
@@ -95,7 +169,7 @@ async function mostrarProyectos() {
         return;
     }
     if(respuesta.ok === true) {
-        mostrarProyectosHTML(respuesta.proyectos);
+        mostrarProyectosHTML(respuesta.proyectos, actividades.porcentaje);
     }
     
 }
@@ -132,7 +206,6 @@ async function mostrarProyectosValidados() {
     }
 }
 async function mostrarProyectosNoValidados() {
-    console.log('hola proyectos no validados');
     divProyectos.classList.remove('d-none');
     formulario.classList.add('d-none');
     const token = localStorage.getItem('token');
@@ -159,14 +232,11 @@ async function mostrarProyectosNoValidados() {
         return;
     }
     if(respuesta.ok === "noValidado") {
-        console.log(respuesta.proyectos);
         mostrarProyectosHTML(respuesta.proyectos);
     }
 }
 
-
-
-function mostrarProyectosHTML(proyectos) {
+function mostrarProyectosHTML(proyectos, porcentaje) {
     limpiarHTML();
     while(divProyecto.firstChild) {
         divProyecto.removeChild(divProyecto.firstChild);
@@ -182,22 +252,27 @@ function mostrarProyectosHTML(proyectos) {
                 <div> 
                 <p><strong>Descripción:</strong><br> ${proyecto.descripcion}</p>
                 <p><strong>Personal:</strong><br> ${proyecto.personal}</p>
-                <p><strong>Actividades:</strong><br> ${proyecto.actividades}</p>
+                <p><strong>Actividades:</strong><br></p>
+                <div class="actividades"></div>
+                <ul class="lista"></ul>
                 <p><strong>Responsable:</strong><br> ${proyecto.responsable}</p>
                 </div>
                 <div class="botones-proyecto d-flex flex-column justify-content-between gap-10">
                 <button class="btn btn-primary">Editar</button>
                 <button class="btn btn-danger">Eliminar</button>
-                <button class="btn btn-secundary">Agregar actividad</button>
+                <button class="btn btn-secundary" onclick(mostrarActividades())>Ver actividad</button>
                 </div>
             </div>
             <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                <div class="${porcentaje <= 0 ? 'text-dark': 'text-light'} progress-bar" role="progressbar" style="width: ${porcentaje}%;" aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="100">${porcentaje}%</div>
             </div>
         </div>
         `;
     });
 }
+
+
+
 function mostrarErrores(errors) {
   
     errors.forEach((error) => {
