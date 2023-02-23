@@ -90,3 +90,10 @@ input {
     padding: 4px;
     border-radius: 8px;
 }
+
+.btn-completo {
+    text-decoration: line-through;
+}
+.btn-completo:hover {
+    text-decoration: line-through;
+}

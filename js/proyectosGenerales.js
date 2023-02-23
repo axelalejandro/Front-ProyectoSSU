@@ -10,7 +10,9 @@ const divRespuesta = document.querySelector('.resultado-proyectos');
 const divProyecto = document.querySelector('.proyecto');
 const divActividades = document.querySelector('.actividades');
 
-misProyectos.addEventListener('click', mostrarProyectos);
+misProyectos.addEventListener('click', () => {
+    window.location.reload();
+});
 agregarProyecto.addEventListener('click', mostrarFormulario);
 agregarProyectoBtn.addEventListener('click', agregarProyectos);
 proyectosValidados.addEventListener('click', mostrarProyectosValidados);
@@ -25,15 +27,12 @@ async function agregarProyectos(e) {
     const nombre = document.querySelector('#nombre').value;
     const descripcion = document.querySelector('#descripcion').value;
     const personal = document.querySelector('#personal').value;
-    const actividades = document.querySelector('#actividades').value;
-    const actividadesArray = [];
     const responsable = document.querySelector('#responsable').value;
     const data = {
         nombre,
         IDproyectista,
         descripcion,
         personal,
-        actividades,
         responsable,
         usuarioId,
     }
@@ -69,112 +68,52 @@ async function mostrarFormulario() {
     divProyectos.classList.add('d-none');
 }
 
-obtenerPorcentaje();
-async function obtenerPorcentaje() {
-    const token = localStorage.getItem('token');
-    const id = convertirToken(token).id;
-    const url = `http://localhost:3000/actividades/${id}`;
-    const resultado = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-    });
-    const respuesta = await resultado.json();
-    if(respuesta.ok === false){
-        mostrarProyectos(respuesta.msg);
-    }
-    if(respuesta.ok === true) {
-        mostrarProyectos(respuesta);
-    }
-}
-
-async function obtenerActividades() {
-    console.log('hola');
-    const token = localStorage.getItem('token');
-    const id = convertirToken(token).id;
-    const url = `http://localhost:3000/actividades/${id}`;
-    const resultado = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-    });
-    const respuesta = await resultado.json();
-    if(respuesta.ok === false){
-        mostrarProyectos(respuesta.msg);
-    }
-    if(respuesta.ok === true) {
-        mostrarActvidadesHTML(respuesta.actividades)
-    }
-}
-
-function mostrarActvidadesHTML(actividades) {
-    limpiarHTML();
-    const div = document.createElement('div');
-    div.classList.add('col-12');
-    div.classList.add('col-md-6');
-    div.classList.add('col-lg-4');
-    div.classList.add('col-xl-3');
-    div.classList.add('mb-4');
-    div.classList.add('d-flex');
-    div.classList.add('justify-content-center');
-    div.classList.add('align-items-center');
-    div.classList.add('actividades');
-    div.innerHTML = `
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">${actividades.nombre}</h5>
-                <p class="card-text">${actividades.descripcion}</p>
-                <p class="card-text">${actividades.fechaInicio}</p>
-                <p class="card-text">${actividades.fechaFin}</p>
-                <p class="card-text">${actividades.porcentaje}</p>
-                <p class="card-text">${actividades.responsable}</p>
-                <p class="card-text">${actividades.estado}</p>
-                <p class="card-text">${actividades.proyectoId}</p>
-                <p class="card-text">${actividades.usuarioId}</p>
-            </div>
-        </div>
-    `;
-    divActividades.appendChild(div);
-}
 
 mostrarProyectos();
-async function mostrarProyectos(actividades) {
+async function mostrarProyectos() {
     divProyectos.classList.remove('d-none');
     formulario.classList.add('d-none');
     const token = localStorage.getItem('token');
     const id = convertirToken(token).id;
-    const url = `http://localhost:3000/proyectos/${id}}`
-    const resultado = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-    });
-    const respuesta = await resultado.json();
-    if(respuesta.ok === false){
+    const urlProyectos = `http://localhost:3000/proyectos/${id}}`
+    const urlActividades = `http://localhost:3000/actividades/${id}`;
+    const [resultadoProyectos, resultadoActividades] = await Promise.all([
+        fetch(urlProyectos, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }),
+        fetch(urlActividades, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+    ]);
+    const respuestaProyectos = await resultadoProyectos.json();
+    const respuestaActividades = await resultadoActividades.json();
+    if(respuestaProyectos.ok === false){
         while(divRespuesta.firstChild) {
             divRespuesta.removeChild(divRespuesta.firstChild);
         }
         const mensaje = document.createElement('p');
-        mensaje.textContent = respuesta.msg;
+        mensaje.textContent = respuestaProyectos.msg;
         mensaje.classList.add('text-danger');
         divRespuesta.appendChild(mensaje);
         divProyecto.classList.add('d-none');
 
         return;
     }
-    if(respuesta.ok === true) {
-        mostrarProyectosHTML(respuesta.proyectos, actividades.porcentaje);
-    }
+    mostrarProyectosHTML(respuestaProyectos.proyectos, respuestaActividades.actividades??[], respuestaActividades.porcentaje??0);
     
 }
 
 async function mostrarProyectosValidados() {
+    while(divRespuesta.firstChild) {
+        divRespuesta.removeChild(divRespuesta.firstChild);
+    }
+    console.log('validados');
     divProyectos.classList.remove('d-none');
     formulario.classList.add('d-none');
     const token = localStorage.getItem('token');
@@ -201,11 +140,16 @@ async function mostrarProyectosValidados() {
         return;
     }
     if(respuesta.ok === "validado") {
-        console.log(respuesta.proyectos);
-        mostrarProyectosHTML(respuesta.proyectos);
+        mostrarProyectosHTML(respuesta.proyectos, [], undefined);
+        return
     }
 }
+
 async function mostrarProyectosNoValidados() {
+    while(divRespuesta.firstChild) {
+        divRespuesta.removeChild(divRespuesta.firstChild);
+    }
+    console.log('no validados');
     divProyectos.classList.remove('d-none');
     formulario.classList.add('d-none');
     const token = localStorage.getItem('token');
@@ -228,47 +172,90 @@ async function mostrarProyectosNoValidados() {
         mensaje.classList.add('text-danger');
         divRespuesta.appendChild(mensaje);
         divProyecto.classList.add('d-none');
-
         return;
     }
     if(respuesta.ok === "noValidado") {
-        mostrarProyectosHTML(respuesta.proyectos);
+        divProyecto.classList.remove('d-none');
+        mostrarProyectosHTML(respuesta.proyectos, [], undefined);
+        return
     }
 }
 
-function mostrarProyectosHTML(proyectos, porcentaje) {
+
+function mostrarProyectosHTML(proyectos, actividades = [], porcentaje = undefined) {
     limpiarHTML();
     while(divProyecto.firstChild) {
         divProyecto.removeChild(divProyecto.firstChild);
     }
-    proyectos.forEach(proyecto => {
-        divProyecto.innerHTML += `
-        <div class="proyecto-container "> 
-            <div class="d-flex justify-content-between align-items-center m-2"> 
-                <h4 class="titulo-proyectos" >${proyecto.nombre} </h4> 
-                <small class="${proyecto.estado == 0 ? 'no-validado' : 'validado'}">${proyecto.estado == 0 ? 'No Validado' : 'Validado'}</small>
-            </div>
-            <div class="d-flex justify-content-between">
-                <div> 
-                <p><strong>Descripción:</strong><br> ${proyecto.descripcion}</p>
-                <p><strong>Personal:</strong><br> ${proyecto.personal}</p>
-                <p><strong>Actividades:</strong><br></p>
-                <div class="actividades"></div>
-                <ul class="lista"></ul>
-                <p><strong>Responsable:</strong><br> ${proyecto.responsable}</p>
+    if(porcentaje !== undefined) {
+        proyectos.forEach(proyecto => {
+            divProyecto.innerHTML += `
+            <div class="proyecto-container "> 
+                <div class="d-flex justify-content-between align-items-center m-2"> 
+                    <h4 class="titulo-proyectos" >${proyecto.nombre} </h4> 
+                    <small class="${proyecto.estado == 0 ? 'no-validado' : 'validado'}">${proyecto.estado == 0 ? 'No Validado' : 'Validado'}</small>
                 </div>
-                <div class="botones-proyecto d-flex flex-column justify-content-between gap-10">
-                <button class="btn btn-primary">Editar</button>
-                <button class="btn btn-danger">Eliminar</button>
-                <button class="btn btn-secundary" onclick(mostrarActividades())>Ver actividad</button>
+                <div>
+                    <div> 
+                    <p><strong>Descripción:</strong><br> ${proyecto.descripcion}</p>
+                    <p><strong>Personal:</strong><br> ${proyecto.personal}</p>
+                    <p><strong>Actividades:</strong><br></p>
+                    <div class=" w-100 d-flex justify-content-between align-items-center">
+                        <ul class="lista d-flex flex-column"></ul>
+                        <button class="btn btn-secundary")>Agregar actividad</button>
+                    </div>
+                    <p><strong>Responsable:</strong><br> ${proyecto.responsable}</p>
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="${porcentaje <= 0 ? 'text-dark': 'text-light'} progress-bar" role="progressbar" style="width: ${porcentaje}%;" aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="100">${porcentaje}%</div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center m-2">
+                    <button class="btn btn-primary m-2">Editar</button>
+                    <button class="btn btn-danger">Eliminar</button>
                 </div>
             </div>
-            <div class="progress">
-                <div class="${porcentaje <= 0 ? 'text-dark': 'text-light'} progress-bar" role="progressbar" style="width: ${porcentaje}%;" aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="100">${porcentaje}%</div>
-            </div>
-        </div>
-        `;
+            `;
+            const lista = document.querySelector('.lista');
+            while(lista.firstChild) {
+                lista.removeChild(lista.firstChild);
+            }
+            if(actividades.length == 0) {
+                lista.innerHTML = `<p class="text-center">No hay actividades</p>`;
+
+            }
+            actividades.forEach(actividad => {
+
+                lista.innerHTML += `
+                <button class="btn mb-2 btn-sm ${actividad.estado == 0 ? "btn-success" : "btn-warning btn-completo"}" onclick="mostrarActividades(${actividad.id})">${actividad.nombre} </button>
+                `;
+            });
+        });
+    } else { 
+        proyectos.forEach(proyecto => {
+            divProyecto.innerHTML += `
+            <div class="proyecto-container "> 
+                <div class="d-flex justify-content-between align-items-center m-2"> 
+                    <h4 class="titulo-proyectos" >${proyecto.nombre} </h4> 
+                    <small class="${proyecto.estado == 0 ? 'no-validado' : 'validado'}">${proyecto.estado == 0 ? 'No Validado' : 'Validado'}</small>
+                </div>
+            `;
+        });
+        
+    }
+
+}
+
+async function mostrarActividades(id) {
+    const url = `http://localhost:3000/actividades/obtener-actividad/${id}`;
+    const resultado = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
     });
+    const respuesta = await resultado.json();
 }
 
 
