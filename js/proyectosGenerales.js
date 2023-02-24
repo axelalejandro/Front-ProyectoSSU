@@ -76,23 +76,15 @@ async function mostrarProyectos() {
     const token = localStorage.getItem('token');
     const id = convertirToken(token).id;
     const urlProyectos = `http://localhost:3000/proyectos/${id}}`
-    const urlActividades = `http://localhost:3000/actividades/${id}`;
-    const [resultadoProyectos, resultadoActividades] = await Promise.all([
-        fetch(urlProyectos, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }),
-        fetch(urlActividades, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-    ]);
+    
+    const resultadoProyectos = await fetch(urlProyectos, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    });
     const respuestaProyectos = await resultadoProyectos.json();
-    const respuestaActividades = await resultadoActividades.json();
     if(respuestaProyectos.ok === false){
         while(divRespuesta.firstChild) {
             divRespuesta.removeChild(divRespuesta.firstChild);
@@ -105,8 +97,28 @@ async function mostrarProyectos() {
 
         return;
     }
-    mostrarProyectosHTML(respuestaProyectos.proyectos, respuestaActividades.actividades??[], respuestaActividades.porcentaje??0);
     
+    // llamar la funcion del porcentaje para cada proyecto
+    const porcentaje = obtenerPorcentaje(respuestaProyectos.proyectos);
+    console.log(porcentaje);
+    mostrarProyectosHTML(respuestaProyectos.proyectos, porcentaje);
+    
+}
+
+function obtenerPorcentaje(proyectos) {
+    let porcentajes = [];
+    proyectos.forEach((proyecto, i) => {
+       if(proyecto.actividades.length === 0) {
+           porcentajes.push(0);
+           return;
+       }
+        let actividadesTotales = proyecto.actividades.length;
+        let actividadesCompletadas = proyecto.actividades.filter(actividad => actividad.estado === true);
+        let actividadesCompletadasTotales = actividadesCompletadas.length;
+        const porcentaje = (actividadesCompletadasTotales / actividadesTotales) * 100;
+        porcentajes.push(Math.round(porcentaje));
+    });
+    return porcentajes;
 }
 
 async function mostrarProyectosValidados() {
@@ -182,67 +194,58 @@ async function mostrarProyectosNoValidados() {
 }
 
 
-function mostrarProyectosHTML(proyectos, actividades = [], porcentaje = undefined) {
+function mostrarProyectosHTML(proyectos, porcentajes) {
     limpiarHTML();
     while(divProyecto.firstChild) {
         divProyecto.removeChild(divProyecto.firstChild);
     }
-    if(porcentaje !== undefined) {
-        proyectos.forEach(proyecto => {
-            divProyecto.innerHTML += `
-            <div class="proyecto-container "> 
-                <div class="d-flex justify-content-between align-items-center m-2"> 
-                    <h4 class="titulo-proyectos" >${proyecto.nombre} </h4> 
-                    <small class="${proyecto.estado == 0 ? 'no-validado' : 'validado'}">${proyecto.estado == 0 ? 'No Validado' : 'Validado'}</small>
+    proyectos.forEach((proyecto, index) => {
+        const porcentaje = porcentajes[index];
+        
+        divProyecto.innerHTML += `
+        <div class="proyecto-container "> 
+            <div class="d-flex justify-content-between align-items-center m-2"> 
+                <h4 class="titulo-proyectos" >${proyecto.nombre} </h4> 
+                <small class="${proyecto.estado == 0 ? 'no-validado' : 'validado'}">${proyecto.estado == 0 ? 'No Validado' : 'Validado'}</small>
+            </div>
+            <div>
+                <div> 
+                <p><strong>Descripción:</strong><br> ${proyecto.descripcion}</p>
+                <p><strong>Personal:</strong><br> ${proyecto.personal}</p>
+                <p><strong>Actividades:</strong><br></p>
+                <div class=" w-100 d-flex justify-content-between align-items-center">
+                    <ul class="lista d-flex flex-column"></ul>
+                    <button class="btn btn-secundary")>Agregar actividad</button>
                 </div>
-                <div>
-                    <div> 
-                    <p><strong>Descripción:</strong><br> ${proyecto.descripcion}</p>
-                    <p><strong>Personal:</strong><br> ${proyecto.personal}</p>
-                    <p><strong>Actividades:</strong><br></p>
-                    <div class=" w-100 d-flex justify-content-between align-items-center">
-                        <ul class="lista d-flex flex-column"></ul>
-                        <button class="btn btn-secundary")>Agregar actividad</button>
-                    </div>
-                    <p><strong>Responsable:</strong><br> ${proyecto.responsable}</p>
-                    </div>
-                </div>
-                <div class="progress">
-                    <div class="${porcentaje <= 0 ? 'text-dark': 'text-light'} progress-bar" role="progressbar" style="width: ${porcentaje}%;" aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="100">${porcentaje}%</div>
-                </div>
-                <div class="d-flex justify-content-center align-items-center m-2">
-                    <button class="btn btn-primary m-2">Editar</button>
-                    <button class="btn btn-danger">Eliminar</button>
+                <p><strong>Responsable:</strong><br> ${proyecto.responsable}</p>
                 </div>
             </div>
-            `;
-            const lista = document.querySelector('.lista');
-            while(lista.firstChild) {
-                lista.removeChild(lista.firstChild);
-            }
-            if(actividades.length == 0) {
-                lista.innerHTML = `<p class="text-center">No hay actividades</p>`;
-
-            }
-            actividades.forEach(actividad => {
-
+            <div class="progress">
+                <div class="${porcentaje <= 0 ? 'text-dark': 'text-light'} progress-bar" role="progressbar" style="width: ${porcentaje}%;" aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="100">${porcentaje}%</div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center m-2">
+                <button class="btn btn-primary m-2">Editar</button>
+                <button class="btn btn-danger">Eliminar</button>
+            </div>
+        </div>
+        `;
+        const lista = document.querySelector('.lista');
+        // poner cada actividad con su proyecto
+        console.log(proyecto.id);
+        proyecto.actividades.forEach(actividad => {
+            console.log('id: ',actividad.proyectoId);
+            if(proyecto.id === actividad.proyectoId) {
                 lista.innerHTML += `
-                <button class="btn mb-2 btn-sm ${actividad.estado == 0 ? "btn-success" : "btn-warning btn-completo"}" onclick="mostrarActividades(${actividad.id})">${actividad.nombre} </button>
+                <li class="d-flex justify-content-between align-items-center">
+                    <p>${actividad.nombre}</p>
+                </li>
                 `;
-            });
+            }
         });
-    } else { 
-        proyectos.forEach(proyecto => {
-            divProyecto.innerHTML += `
-            <div class="proyecto-container "> 
-                <div class="d-flex justify-content-between align-items-center m-2"> 
-                    <h4 class="titulo-proyectos" >${proyecto.nombre} </h4> 
-                    <small class="${proyecto.estado == 0 ? 'no-validado' : 'validado'}">${proyecto.estado == 0 ? 'No Validado' : 'Validado'}</small>
-                </div>
-            `;
-        });
-        
-    }
+          
+    });
+
+ 
 
 }
 
