@@ -100,7 +100,6 @@ async function mostrarProyectos() {
     
     // llamar la funcion del porcentaje para cada proyecto
     const porcentaje = obtenerPorcentaje(respuestaProyectos.proyectos);
-    console.log(porcentaje);
     mostrarProyectosHTML(respuestaProyectos.proyectos, porcentaje);
     
 }
@@ -152,7 +151,8 @@ async function mostrarProyectosValidados() {
         return;
     }
     if(respuesta.ok === "validado") {
-        mostrarProyectosHTML(respuesta.proyectos, [], undefined);
+        const porcentaje = obtenerPorcentaje(respuesta.proyectos);
+        mostrarProyectosHTML(respuesta.proyectos, porcentaje);
         return
     }
 }
@@ -188,7 +188,8 @@ async function mostrarProyectosNoValidados() {
     }
     if(respuesta.ok === "noValidado") {
         divProyecto.classList.remove('d-none');
-        mostrarProyectosHTML(respuesta.proyectos, [], undefined);
+        const porcentaje = obtenerPorcentaje(respuesta.proyectos);
+        mostrarProyectosHTML(respuesta.proyectos, porcentaje);
         return
     }
 }
@@ -201,6 +202,7 @@ function mostrarProyectosHTML(proyectos, porcentajes) {
     }
     proyectos.forEach((proyecto, index) => {
         const porcentaje = porcentajes[index];
+        const actividades = proyecto.actividades;
         
         divProyecto.innerHTML += `
         <div class="proyecto-container "> 
@@ -214,42 +216,79 @@ function mostrarProyectosHTML(proyectos, porcentajes) {
                 <p><strong>Personal:</strong><br> ${proyecto.personal}</p>
                 <p><strong>Actividades:</strong><br></p>
                 <div class=" w-100 d-flex justify-content-between align-items-center">
-                    <ul class="lista d-flex flex-column"></ul>
-                    <button class="btn btn-secundary")>Agregar actividad</button>
+                ${proyecto.actividades.length > 0 ? `
+                <ul class="lista d-flex flex-column">
+                    ${actividades.map(actividad => `<div class="d-flex align-items-center justify-content-center"><button class="btn mb-2 ${actividad.estado == 0 ? 'btn-warning' : 'btn-success btn-completo' }">${actividad.nombre}</button><small>${actividad.estado == 0 ? '❌' : '✅'}</small></div>`).join('')}
+                </ul>
+                ` : `
+                <p>No hay actividades</p>
+                `}
+                    <button class="btn btn-secundary" id="openModalBtn")>Agregar actividad</button>
                 </div>
                 <p><strong>Responsable:</strong><br> ${proyecto.responsable}</p>
                 </div>
             </div>
             <div class="progress">
-                <div class="${porcentaje <= 0 ? 'text-dark': 'text-light'} progress-bar" role="progressbar" style="width: ${porcentaje}%;" aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="100">${porcentaje}%</div>
+                <div class="${porcentaje <= 0 ? 'text-dark': 'text-light'} progress-bar" role="progressbar" style="width: ${porcentaje}%; animation: progress-bar-fill ${porcentaje / 2}s linear reverse;" aria-valuenow="${porcentaje}" aria-valuemin="0" aria-valuemax="100">${porcentaje}%</div>
             </div>
+            <style>
+                .progress-bar-fill {
+                    width: ${porcentaje}%;
+                }
+                
+                @keyframes progress-bar-fill {
+                    to {
+                        width: 0%;
+                    }
+                }
+            </style>
             <div class="d-flex justify-content-center align-items-center m-2">
                 <button class="btn btn-primary m-2">Editar</button>
                 <button class="btn btn-danger">Eliminar</button>
             </div>
         </div>
         `;
-        const lista = document.querySelector('.lista');
-        // poner cada actividad con su proyecto
-        console.log(proyecto.id);
-        proyecto.actividades.forEach(actividad => {
-            console.log('id: ',actividad.proyectoId);
-            if(proyecto.id === actividad.proyectoId) {
-                lista.innerHTML += `
-                <li class="d-flex justify-content-between align-items-center">
-                    <p>${actividad.nombre}</p>
-                </li>
-                `;
-            }
+        // Obtener referencia al botón para abrir el modal
+        const openModalBtn = document.getElementById('openModalBtn');
+    
+        // Obtener referencia al modal
+        const modalEl = document.getElementById('exampleModal');
+      
+        // Crear un objeto Modal a partir del elemento modal
+        const modal = new bootstrap.Modal(modalEl);
+      
+        // Agregar un evento de clic al botón para abrir el modal
+        openModalBtn.addEventListener('click', () => {
+          modal.show();
+          const agregarActividades = document.querySelector('.agregar-actividades');
+            agregarActividades.addEventListener('click', (e) =>  agregarActividad(proyecto.id, e))
         });
-          
     });
 
- 
 
 }
 
-async function mostrarActividades(id) {
+
+async function agregarActividad(id, e) {
+    e.preventDefault();
+    console.log(id);
+    const url = `http://localhost:3000/actividades/${id}`;
+    const resultado = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            nombre: 'Actividad 1'
+        })
+    });
+    const respuesta = await resultado.json();
+    console.log(respuesta);
+}
+
+async function mostrarActividades(id, e) {
+    e.preventDefault();
     const url = `http://localhost:3000/actividades/obtener-actividad/${id}`;
     const resultado = await fetch(url, {
         method: 'GET',

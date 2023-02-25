@@ -97,3 +97,7 @@ input {
 .btn-completo:hover {
     text-decoration: line-through;
 }
+
+.progress-bar {
+    transition: width 2s ease-in-out;
+  }
