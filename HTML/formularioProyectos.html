@@ -92,21 +92,27 @@
                 <h5 class="modal-title" id="exampleModalLabel">Formulario de registro</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
+              <div class="modal-actividades-agregadas">
+              </div>
               <div class="modal-body">
-                <form>
+                <form class="formulario-actividades">
+                  <div class="resultado-actividades"></div>
                   <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre">
+                    <label for="nombre-actividad" class="form-label">Nombre de la actividad:</label>
+                    <input type="text" class="form-control" id="nombre-actividad" placeholder="Ingresa el nombre de la actividad" value="">
                   </div>
                   <div class="mb-3">
-                    <label for="email" class="form-label">Correo electrónico</label>
-                    <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico">
+                    <label for="fecha-actividad" class="form-label">Fecha de entrega</label>
+                    <input type="date" class="form-control" id="fecha-actividad" value="">
                   </div>
                   <div class="mb-3">
-                    <label for="contraseña" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="contraseña" placeholder="Ingresa tu contraseña">
+                    <label for="sede-actividad" class="form-label">SEDE</label>
+                    <input type="text" class="form-control" id="sede-actividad" placeholder="Ingresa la sede a la que perteneces" value="">
                   </div>
-                  <button class="btn btn-primary agregar-actividades">Registrarse</button>
+                  <div class="mb-3">
+                    <label for="descripcion-actividad" class="form-label">Descripcion del proyecto</label>
+                    <textarea class="form-control mb-2" id="descripcion-actividad" rows="3" value=""></textarea>
+                  <button class="btn btn-primary agregar-actividades m-auto">Guardar</button>
                 </form>
               </div>
             </div>

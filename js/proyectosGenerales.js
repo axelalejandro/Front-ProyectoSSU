@@ -9,6 +9,7 @@ const resultado = document.querySelector('.resultado');
 const divRespuesta = document.querySelector('.resultado-proyectos');
 const divProyecto = document.querySelector('.proyecto');
 const divActividades = document.querySelector('.actividades');
+const resultadoActividades = document.querySelector('.resultado-actividades');
 
 misProyectos.addEventListener('click', () => {
     window.location.reload();
@@ -218,12 +219,12 @@ function mostrarProyectosHTML(proyectos, porcentajes) {
                 <div class=" w-100 d-flex justify-content-between align-items-center">
                 ${proyecto.actividades.length > 0 ? `
                 <ul class="lista d-flex flex-column">
-                    ${actividades.map(actividad => `<div class="d-flex align-items-center justify-content-center"><button class="btn mb-2 ${actividad.estado == 0 ? 'btn-warning' : 'btn-success btn-completo' }">${actividad.nombre}</button><small>${actividad.estado == 0 ? '❌' : '✅'}</small></div>`).join('')}
+                    ${actividades.map(actividad => `<div class="d-flex align-items-center justify-content-start"><button class="btn mb-2 ${actividad.estado == 0 ? 'btn-warning' : 'btn-success btn-completo' }">${actividad.nombre}</button><small>${actividad.estado == 0 ? '❌' : '✅'}</small></div>`).join('')}
                 </ul>
                 ` : `
                 <p>No hay actividades</p>
                 `}
-                    <button class="btn btn-secundary" id="openModalBtn")>Agregar actividad</button>
+                <button class="btn btn-secundary" id="openModalBtn" data-id-proyecto="${proyecto.id}")>Agregar actividad </button>
                 </div>
                 <p><strong>Responsable:</strong><br> ${proyecto.responsable}</p>
                 </div>
@@ -249,7 +250,7 @@ function mostrarProyectosHTML(proyectos, porcentajes) {
         </div>
         `;
         // Obtener referencia al botón para abrir el modal
-        const openModalBtn = document.getElementById('openModalBtn');
+        const openModalBtn = document.querySelectorAll('#openModalBtn');
     
         // Obtener referencia al modal
         const modalEl = document.getElementById('exampleModal');
@@ -257,21 +258,35 @@ function mostrarProyectosHTML(proyectos, porcentajes) {
         // Crear un objeto Modal a partir del elemento modal
         const modal = new bootstrap.Modal(modalEl);
       
-        // Agregar un evento de clic al botón para abrir el modal
-        openModalBtn.addEventListener('click', () => {
-          modal.show();
-          const agregarActividades = document.querySelector('.agregar-actividades');
-            agregarActividades.addEventListener('click', (e) =>  agregarActividad(proyecto.id, e))
+        openModalBtn.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Obtener el id del proyecto con el dataset del botón data-id-proyecto
+                const id = btn.dataset.idProyecto;
+                console.log(id);
+                modal.show();
+                const agregarActividadBtn = document.querySelector('.agregar-actividades');
+                agregarActividadBtn.addEventListener('click', (e) => agregarActividad(id, e));
+            });
         });
+
     });
 
-
+      
 }
 
 
 async function agregarActividad(id, e) {
-    e.preventDefault();
     console.log(id);
+    e.preventDefault();
+    const nombre = document.querySelector('#nombre-actividad').value;
+    const fecha = document.querySelector('#fecha-actividad').value;
+    const sede = document.querySelector('#sede-actividad').value;
+    const descripcion = document.querySelector('#descripcion-actividad').value;
+    // obtener el nombre de quien crea la actividad
+    const token = localStorage.getItem('token');
+    const nombreMiembro = convertirToken(token).nombre;
+    console.log(nombreMiembro);
+
     const url = `http://localhost:3000/actividades/${id}`;
     const resultado = await fetch(url, {
         method: 'POST',
@@ -280,11 +295,51 @@ async function agregarActividad(id, e) {
             Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-            nombre: 'Actividad 1'
+            fecha,
+            nombreMiembro,
+            sede,
+            nombre,
+            descripcion,
+            proyectoId: id
         })
     });
     const respuesta = await resultado.json();
-    console.log(respuesta);
+    
+    if(respuesta.ok == 'errores') {
+        limpiarHTML();
+        mostrarErroresActividades(respuesta.errors);
+        return;
+    }
+    if(respuesta.ok == true) {
+        limpiarHTML();
+        modalActividadAgregada(respuesta.msg);
+    }
+
+}
+
+function modalActividadAgregada(msg) {
+    const formularioActividades = document.querySelector('.formulario-actividades');
+    const modalTitle = document.querySelector('.modal-title');
+    modalTitle.innerHTML = 'Actividad agregada ✅';
+   resultadoActividades.innerHTML = `
+   <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <h5>${msg}</h5>
+                <p>✅</p>
+            </div>
+        </div>
+    </div>
+   `;
+    const myModal = new bootstrap.Modal(document.getElementById('myModal'));
+    // ocultar modal de formulario de actividades
+    formularioActividades.classList.add('d-none');
+    // mostrar modal de actividad agregada por 3 segundos
+    myModal.show();
+    setTimeout(() => {
+        myModal.hide();
+        window.location.reload();
+    }, 3000);
 }
 
 async function mostrarActividades(id, e) {
@@ -314,6 +369,18 @@ function mostrarErrores(errors) {
     });
 
 }
+function mostrarErroresActividades(errors) {
+  
+    errors.forEach((error) => {
+        const alerta = document.createElement('small');
+        alerta.textContent = error.msg;
+        alerta.classList.add('text-danger');
+        resultadoActividades.appendChild(alerta);
+        const br = document.createElement('br');
+        resultadoActividades.appendChild(br);
+    });
+
+}
 
 
 function mostrarError(error) {
@@ -336,7 +403,8 @@ function convertirToken(token) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
     const obj = JSON.parse(jsonPayload);
+    const nombre = obj.nombre;
     const AIMID = obj.AIMID;
     const id = obj.id;
-    return {id, AIMID};
+    return {id, AIMID, nombre};
 }
