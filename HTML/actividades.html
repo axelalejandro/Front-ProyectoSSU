@@ -19,8 +19,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!--Mi CSS-->
     <link rel="stylesheet" href="../static/CSS/generales.css">
-    <link rel="stylesheet" href="../static/CSS/HomePage.css">
-    <title>HomePage</title>
+    <link rel="stylesheet" href="../static/CSS/actividades.css">
+    <title>Actividad</title>
 </head>
 <body>
    <nav>
@@ -48,64 +48,32 @@
               </li>
         </ul>
    </nav>
-   <section class="proyectos d-flex flex-column">
-    <h1 class="proyectos-titulo">Proyectos</h1>
-    <div class="proyectos-container d-flex justify-content-between overflow-hidden p-2">
-    </div>
-   </section>
-   <section class="departamentos d-flex flex-column">
-    <h1 class="departamentos-titulo">Departamentos</h1>
-    <div class="departamentos-container d-flex justify-content-between overflow-hidden p-2">
-        <div class="departamentos-card">
-            <div class="departamentos-card-img">
-                <img src="../static/IMG/aimLogo.jpg" alt="">
-            </div>
-            <div class="departamentos-card-info">
-                <h2>Departamento 1</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
-            </div>
+   <main>
+    <section class="actividad-section">
+        <div class="actividad-button-regresar">
+            <a href="formularioProyectos.html"><button class="btn btn-primary">Regresar</button></a>
         </div>
-        <div class="departamentos-card">
-            <div class="departamentos-card-img">
-                <img src="../static/IMG/aimLogo.jpg" alt="">
+        <h2>Nombre de la actividad</h2>
+        <div class="actividad-container">
+            <p>Creada por: Nombre</p>
+            <p>Descripcion de la actividad: Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae quibusdam rerum impedit possimus obcaecati eveniet libero eum omnis dolor! Facere minus quas ipsa magni officiis odio quos mollitia, consectetur modi.</p>
+            <div class="actividad-fechas w-50 d-flex justify-content-between">
+                <p>Fecha de inicio: 00/00/0000</p>
+                <p>Fecha de fin: 00/00/0000</p>
             </div>
-            <div class="departamentos-card-info">
-                <h2>Departamento 2</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
-            </div>
+            <p>SEDE: DICIS</p>
         </div>
-        <div class="departamentos-card">
-            <div class="departamentos-card-img">
-                <img src="../static/IMG/aimLogo.jpg" alt="">
-            </div>
-            <div class="departamentos-card-info">
-                <h2>Departamento 3</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
-            </div>
+        <div class="actividad-buttons">
+            <button class="btn btn-success">MArcar completa</button>
+            <button class="btn btn-warning">Editar</button>
+            <button class="btn btn-danger">Eliminar</button>
         </div>
-        <div class="departamentos-card">
-            <div class="departamentos-card-img">
-                <img src="../static/IMG/aimLogo.jpg" alt="">
-            </div>
-            <div class="departamentos-card-info">
-                <h2>Departamento 4</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
-            </div>
-        </div>
-        <div class="departamentos-card">
-            <div class="departamentos-card-img">
-                <img src="../static/IMG/aimLogo.jpg" alt="">
-            </div>
-            <div class="departamentos-card-info">
-                <h2>Departamento 5</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
-            </div>
-        </div>
-    </div>
-   </section>
+
+    </section>
+    
+   </main>
    <footer>
     <section class="footer-section__info">
-
       <div>
         <h1>AIM</h1>
         <small class="mb-2">Asociación de ingenieros mecatrónicos</small>
@@ -128,7 +96,7 @@
     </section>
    </footer>
     <script src="/js/auth.js"></script>
-    <script src="../js/homePage.js"></script>
+    <script src="../js/actividades.js"></script>
 
   
 </body>
