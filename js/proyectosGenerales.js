@@ -219,7 +219,7 @@ function mostrarProyectosHTML(proyectos, porcentajes) {
                 <div class=" w-100 d-flex justify-content-between align-items-center">
                 ${proyecto.actividades.length > 0 ? `
                 <ul class="lista d-flex flex-column">
-                    ${actividades.map(actividad => `<div class="d-flex align-items-center justify-content-start"><a href="actividades.html?id=${actividad.id}" class="btn mb-2 ${actividad.estado == 0 ? 'btn-warning' : 'btn-success btn-completo' }">${actividad.nombre}</a><small>${actividad.estado == 0 ? '❌' : '✅'}</small></div>`).join('')}
+                    ${actividades.map(actividad => `<div class="d-flex align-items-center justify-content-start"><a href="actividades.html?id=${actividad.id}" class="btn mb-2 ${proyecto.estado == 0 ? 'disabled-btn' : 'enable'} ${actividad.estado == 0 ? 'btn-warning' : 'btn-success btn-completo' }">${actividad.nombre}</a><small>${actividad.estado == 0 ? '❌' : '✅'}</small></div>`).join('')}
                 </ul>
                 ` : `
                 <p>No hay actividades</p>

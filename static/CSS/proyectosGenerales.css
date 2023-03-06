@@ -1,5 +1,11 @@
 .barra-lateral {
     background: rgb(34, 46, 65);
+    position: sticky;
+    top: 50px;
+    z-index: 100;
+    width: 20%;
+    height: 75vh;
+    margin-top: 50px;
 }
 .barra-lateral__container {
     padding: 16px;
@@ -102,4 +108,19 @@ input {
     transition: width 2s ease-in-out;
   }
 
- 
+ .disabled-btn {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+.disabled-btn:hover {
+        cursor: not-allowed;
+  }
+
+.enable {
+    pointer-events: auto;
+    opacity: 1;
+  }
+.enable:hover {
+    cursor: pointer;
+}

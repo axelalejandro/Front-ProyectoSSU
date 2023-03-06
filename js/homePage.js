@@ -45,3 +45,17 @@ function mostrarProyectos(proyectos) {
         `
     });
 }
+// Obtén el contenedor donde mostrarás el código QR
+var qrcodeContainer = document.getElementById('qrcode');
+
+// Crea el código QR con la información de tu evento
+var qrcode = new QRCode(qrcodeContainer, {
+    text: 'http://127.0.0.1:5500/HTML/formularioProyectos.html',
+    width: 200,
+    height: 200
+});
+
+// Redirige al usuario a la página web del evento cuando escanea el código QR
+qrcodeContainer.addEventListener('click', function() {
+    window.location.href = 'http://127.0.0.1:5500/HTML/formularioProyectos.html';
+});
