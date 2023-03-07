@@ -1,52 +1,161 @@
-// Define los eventos
-var eventos = [
-    {
-      id: 1,
-      title: 'Evento 1',
-      start: '2023-03-15T10:30:00',
-      end: '2023-03-15T12:30:00'
-    },
-    {
-      id: 2,
-      title: 'Evento 2',
-      start: '2023-03-17T12:00:00',
-      end: '2023-03-17T13:30:00'
-    },
-    {
-      id: 3,
-      title: 'Evento 3',
-      start: '2023-03-20T09:00:00',
-      end: '2023-03-20T11:00:00'
-    }
-  ];
-  
-  // Crea una instancia del calendario
-  var calendarEl = document.getElementById('calendario');
-  var calendario = new FullCalendar.Calendar(calendarEl, {
-    plugins: ['dayGrid', 'timeGrid', 'list'],
-    header: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-    },
-    defaultView: 'dayGridMonth',
-    defaultDate: '2023-03-01',
-    editable: true,
-    eventLimit: true,
-    events: eventos,
-    // Agrega un evento cuando se hace clic en un día
-    dateClick: function(info) {
-      var fecha = info.dateStr;
-      var titulo = prompt('Ingrese el título del evento:');
-      if (titulo) {
-        calendario.addEvent({
-          title: titulo,
-          start: fecha
+
+let events = {
+    id: '',
+    title: '',
+    start: '',
+    backgroundColor: '',
+}
+
+const base_url = 'http://localhost:3000/eventos';
+
+let calendarEl = document.getElementById('calendar');
+let frm = document.getElementById('formulario');
+let eliminar = document.getElementById('btnEliminar');
+let myModal = new bootstrap.Modal(document.getElementById('myModal'));
+
+obtenerEventos();
+async function obtenerEventos() {
+    const eventos = await fetch(base_url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const data = await eventos.json();
+    data.eventos.forEach(evento => {
+        events.push({
+            id: evento.id,
+            title: evento.nombre,
+            start: evento.fecha,
         });
-      }
-    }
-  });
-  
-  // Renderiza el calendario
-  calendario.render();
-  
+    });
+    calendar.refetchEvents();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    calendar = new FullCalendar.Calendar(calendarEl, {
+        timeZone: 'local',
+        initialView: 'dayGridMonth',
+        locale: 'es',
+        headerToolbar: {
+            left: 'prev next today',
+            center: 'title',
+            right: 'dayGridMonth timeGridWeek listWeek'
+        },
+        events: events,
+        editable: true,
+        dateClick: function (info) {
+            frm.reset();
+            eliminar.classList.add('d-none');
+            document.getElementById('start').value = info.dateStr;
+            document.getElementById('id').value = '';
+            document.getElementById('btnAccion').textContent = 'Registrar';
+            document.getElementById('titulo').textContent = 'Registrar Evento';
+            myModal.show();
+        },
+
+        eventClick: function (info) {
+            document.getElementById('id').value = info.event.id;
+            document.getElementById('title').value = info.event.title;
+            document.getElementById('start').value = info.event.startStr;
+            document.getElementById('color').value = info.event.backgroundColor;
+            document.getElementById('btnAccion').textContent = 'Modificar';
+            document.getElementById('titulo').textContent = 'Actualizar Evento';
+            eliminar.classList.remove('d-none');
+            myModal.show();
+        },
+        eventDrop: function (info) {
+            const start = info.event.startStr;
+            const id = info.event.id;
+            const url = base_url + 'Home/drag';
+            const http = new XMLHttpRequest();
+            const formDta = new FormData();
+            formDta.append('start', start);
+            formDta.append('id', id);
+            http.open("POST", url, true);
+            http.send(formDta);
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                    const res = JSON.parse(this.responseText);
+                     Swal.fire(
+                         'Avisos?',
+                         res.msg,
+                         res.tipo
+                     )
+                    if (res.estado) {
+                        myModal.hide();
+                        calendar.refetchEvents();
+                    }
+                }
+            }
+        }
+
+    });
+    calendar.render();
+    frm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const title = document.getElementById('title').value;
+        const start = document.getElementById('start').value;
+        if (title == '' || start == '') {
+             Swal.fire(
+                 'Avisos?',
+                 'Todo los campos son obligatorios',
+                 'warning'
+             )
+        } else {
+            const url = base_url + 'Home/registrar';
+            const http = new XMLHttpRequest();
+            http.open("POST", url, true);
+            http.send(new FormData(frm));
+            http.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                    const res = JSON.parse(this.responseText);
+                     Swal.fire(
+                         'Avisos?',
+                         res.msg,
+                         res.tipo
+                     )
+                    if (res.estado) {
+                        myModal.hide();
+                        calendar.refetchEvents();
+                    }
+                }
+            }
+        }
+    });
+    eliminar.addEventListener('click', function () {
+        myModal.hide();
+        Swal.fire({
+            title: 'Advertencia?',
+            text: "Esta seguro de eliminar!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const url = base_url + 'Home/eliminar/' + document.getElementById('id').value;
+                const http = new XMLHttpRequest();
+                http.open("GET", url, true);
+                http.send();
+                http.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText);
+                        const res = JSON.parse(this.responseText);
+                        Swal.fire(
+                            'Avisos?',
+                            res.msg,
+                            res.tipo
+                        )
+                        if (res.estado) {
+                            calendar.refetchEvents();
+                        }
+                    }
+                }
+            }
+        })
+    });
+})

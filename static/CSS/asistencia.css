@@ -1,0 +1,24 @@
+.formulario-asistencia {
+    width: 75%;
+    height: auto;
+    background: rgb(34, 46, 65);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #000;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+input {
+    width: 100%;
+    height: 42px;
+    font-size: 18px;
+    border: 0;
+    padding: 54px;
+    border-radius: 15px;
+}

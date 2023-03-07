@@ -4,30 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--JQUERY-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
-    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     
     <!-- Los iconos tipo Solid de Fontawesome-->
+        <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
-   
-    <!-- Agrega los archivos CSS de FullCalendar -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
-
-    <!-- Agrega los archivos JavaScript de FullCalendar -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
-
     <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!--Mi CSS-->
     <link rel="stylesheet" href="../static/CSS/generales.css">
-    <link rel="stylesheet" href="../static/CSS/eventos.css">
+    <!-- <link rel="stylesheet" href="../static/CSS/eventos.css"> -->
+    <!-- <link rel="stylesheet" href="../static/CSS/main.min.css"> -->
     <title>Eventos</title>
 </head>
 <body>
@@ -57,9 +46,52 @@
         </ul>
    </nav>
    <main>
-    <section>
-        <div id="calendario"></div>
-    </section>
+    <div class="container w-100 text-light">
+      <div class="w-100" id="calendar"></div>
+  </div>
+  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header bg-info">
+                  <h5 class="modal-title" id="titulo">Registro de Eventos</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form id="formulario" autocomplete="off">
+                  <div class="modal-body">
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div class="form-floating mb-3">
+                                  <input type="hidden" id="id" name="id">
+                                  <input id="title" type="text" class="form-control" name="title">
+                                  <label for="title">Evento</label>
+                              </div>
+
+                          </div>
+                          <div class="col-md-12">
+                              <div class="form-floating mb-3">
+                                  <input class="form-control" id="start" type="date" name="start">
+                                  <label for="" class="form-label">Fecha</label>
+                              </div>
+
+                          </div>
+                          <div class="col-md-12">
+                              <div class="form-floating mb-3">
+                                  <input class="form-control" id="color" type="color" name="color">
+                                  <label for="color" class="form-label">Color</label>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
+                      <button type="submit" class="btn btn-primary" id="btnAccion">Guardar</button>
+                  </div>
+              </form>
+
+          </div>
+      </div>
+  </div>
    </main>
    <footer>
     <section class="footer-section__info">
@@ -85,7 +117,12 @@
       <p>© 2023 AIM. Todos los derechos reservados.</p>
     </section>
    </footer>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="../js/eventos.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.min.js"></script>
+    <script src="../js/es.js"></script>
+    <script src="../js/sweetalert2.all.min.js"></script>
 
   
 </body>
