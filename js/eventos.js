@@ -1,10 +1,4 @@
 
-let events = {
-    id: '',
-    title: '',
-    start: '',
-    backgroundColor: '',
-}
 
 const base_url = 'http://localhost:3000/eventos';
 
@@ -13,7 +7,13 @@ let frm = document.getElementById('formulario');
 let eliminar = document.getElementById('btnEliminar');
 let myModal = new bootstrap.Modal(document.getElementById('myModal'));
 
-obtenerEventos();
+
+function backgroudRandom() {
+    const colores = ['#FF0000', '#FFA500', '#FFFF00', '#008000', '#0000FF', '#4B0082', '#EE82EE'];
+    return colores[Math.floor(Math.random() * colores.length)];
+}
+
+obtenerEventos()
 async function obtenerEventos() {
     const eventos = await fetch(base_url, {
         method: 'GET',
@@ -22,17 +22,33 @@ async function obtenerEventos() {
         }
     });
     const data = await eventos.json();
-    data.eventos.forEach(evento => {
-        events.push({
-            id: evento.id,
-            title: evento.nombre,
-            start: evento.fecha,
-        });
-    });
-    calendar.refetchEvents();
+    return data.eventos.map(evento => ({
+        id: evento.id,
+        title: evento.nombre,
+        start: evento.fecha,
+        backgroundColor: backgroudRandom(),
+    }));
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+async function agregarEvento() {
+    const evento = await fetch(base_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nombre: document.getElementById('title').value,
+            fecha: document.getElementById('start').value,
+            color: document.getElementById('color').value
+        })
+    });
+    const data = await evento.json();
+    return data;
+} 
+
+document.addEventListener('DOMContentLoaded', async function () {
+    const eventos = await obtenerEventos();
+    console.log(eventos);
     calendar = new FullCalendar.Calendar(calendarEl, {
         timeZone: 'local',
         initialView: 'dayGridMonth',
@@ -42,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
             center: 'title',
             right: 'dayGridMonth timeGridWeek listWeek'
         },
-        events: events,
+        events: eventos,
         editable: true,
         dateClick: function (info) {
             frm.reset();
