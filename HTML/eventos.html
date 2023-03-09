@@ -7,15 +7,16 @@
     
     <!-- Los iconos tipo Solid de Fontawesome-->
         <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
     <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <!--Mi CSS-->
     <link rel="stylesheet" href="../static/CSS/generales.css">
-    <!-- <link rel="stylesheet" href="../static/CSS/eventos.css"> -->
+    <link rel="stylesheet" href="../static/CSS/eventos.css">
+    
     <!-- <link rel="stylesheet" href="../static/CSS/main.min.css"> -->
     <title>Eventos</title>
 </head>
@@ -46,8 +47,8 @@
         </ul>
    </nav>
    <main>
-    <div class="container w-100 text-light">
-      <div class="w-100" id="calendar"></div>
+    <div class="container w-100 ">
+      <div class="w-100 " id="calendar"></div>
   </div>
   <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
       <div class="modal-dialog">
@@ -62,49 +63,55 @@
                           <div class="col-md-12">
                               <div class="form-floating mb-3">
                                   <input type="hidden" id="id" name="id">
-                                  <input id="title" type="text" class="form-control" name="title">
-                                  <label for="title">Nombre del evento</label>
+                                  <input id="nombre" type="text" class="form-control" name="nombre" value="">
+                                  <label for="nombre">Nombre del evento</label>
                               </div>
                           </div>
                           <div class="col-md-12">
                               <div class="form-floating mb-3">
                                   <input type="hidden" id="id" name="id">
-                                  <input id="title" type="text" class="form-control" name="descripcion">
-                                  <label for="title">Descripción</label>
+                                  <input id="descripcion" type="text" class="form-control" name="descripcion" value="">
+                                  <label for="descripcion">Descripción</label>
                               </div>
                           </div>
                           <div class="col-md-12">
                               <div class="form-floating mb-3">
                                   <input type="hidden" id="id" name="id">
-                                  <input id="title" type="text" class="form-control" name="title">
-                                  <label for="title">Lugar</label>
+                                  <input id="lugar" type="text" class="form-control" name="lugar" value="">
+                                  <label for="lugar">Lugar</label>
                               </div>
                           </div>
                           <div class="col-md-12">
                               <div class="form-floating mb-3">
-                                  <input class="form-control" id="start" type="date" name="start">
-                                  <label for="" class="form-label">Fecha</label>
+                                  <input class="form-control" id="fecha" type="date" name="fecha">
+                                  <label for="fecha" class="form-label">Fecha</label>
                               </div>
                           </div>
                             <div class="row">
                                 <div class="col-md-6">
                                   <div class="form-floating mb-3">
-                                    <input class="form-control" id="start" type="time" name="start">
-                                    <label for="start" class="form-label">Hora de inicio</label>
+                                    <input class="form-control" id="hora-inicio" type="time" name="hora-inicio">
+                                    <label for="hora-inicio" class="form-label">Hora de inicio</label>
                                   </div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="form-floating mb-3">
-                                    <input class="form-control" id="end" type="time" name="end">
-                                    <label for="end" class="form-label">Hora de finalización</label>
+                                    <input class="form-control" id="hora-fin" type="time" name="hora-fin">
+                                    <label for="hora-fin" class="form-label">Hora de finalización</label>
                                   </div>
                                 </div>
                               </div>
-                              
+                              <div class="col-md-12">
+                                <div class="form-floating mb-3">
+                                    <input type="hidden" id="id" name="id">
+                                    <input id="responsable" type="text" class="form-control" name="responsable" value="">
+                                    <label for="responsable">Respopnsable</label>
+                                </div>
+                            </div>
                           <div class="col-md-12">
                               <div class="form-floating mb-3">
-                                  <input class="form-control" id="color" type="color" name="color">
-                                  <label for="color" class="form-label">Color</label>
+                                  <input class="form-control" id="background" type="color" name="background">
+                                  <label for="background" class="form-label">Color</label>
                               </div>
                           </div>
                       </div>

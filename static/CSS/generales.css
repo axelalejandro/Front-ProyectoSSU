@@ -99,3 +99,63 @@ footer {
     color: #fff;
     text-decoration: none;
 }
+
+.fc-listWeek td.fc-list-item:hover {
+    background-color: #000000; /* Cambia el color a tu preferencia */
+  }
+
+.fc-listWeek td.fc-list-item {
+    border-bottom: 1px solid #000000;
+    padding: 10px;
+    font-size: 14px;
+    color: #000000;
+  }
+
+#calendar {
+    background-color: #fff;
+  }
+
+#calendar .fc-toolbar {
+    background-color: #000000;
+    color: #fff;
+    height: 80px;
+    padding: 0 20px;
+  }
+#calendar .fc-toolbar h2 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 80px;
+  }
+
+#calendar button {
+    background-color: #313131;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+#calendar button:hover {
+    background-color: #fff;
+    color: #000;
+  }
+#calendar button:focus, #calendar button:active {
+    background-color: #fff;
+    color: #000;
+  }
+#calendar .fc-event-title {
+    height: 40px;
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+#calendar .fc-event {
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
