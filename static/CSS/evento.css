@@ -33,3 +33,56 @@
     position: relative;
     z-index: 1;
 }
+
+.card-evento button {
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem; 
+    font-weight: 300;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    outline: none;
+    margin-top: 1rem;
+    position: relative;
+}
+.card-evento button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: #ffffff;
+    transition: width 1s ease-in-out;
+    z-index: -1;
+}
+.card-evento button:hover span{
+    position: relative;
+    color: #000;
+    z-index: 2;
+
+} 
+
+.card-evento button:hover {
+   border: #000 solid 1px;
+}
+
+
+.card-evento button:hover::before {
+    width: 100%;
+    transition: width 1s ease-in-out;
+
+}
+
+.qr-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
