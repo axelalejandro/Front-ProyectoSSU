@@ -90,6 +90,11 @@ document.addEventListener('DOMContentLoaded', async function () {
           
         events: eventos,
         // editable: true,
+        // si da click en un evento abrir una nueva ventana
+        eventClick: function (info) {
+            // abrir una nueva ventana con el id del evento
+            window.open(`evento.html?id=${info.event.id}`);
+        },
         dateClick: function (info) {
             frm.reset();
             eliminar.classList.add('d-none');
