@@ -23,23 +23,15 @@
     <title>HomePage</title>
 </head>
 <body>
-   <main class="w-100 d-flex justify-content-center align-items-center flex-column text-light">
+   <main class="w-100  d-flex justify-content-center align-items-center flex-column text-light">
     <h1 class="py-5">Asociación de ingenieros mecatrónicos</h1>
     <form class="formulario-asistencia">
         <h3>Formulario de registro de asistencia</h3>
         <div class="form-group w-50">
-          <label for="nombre">Nombre</label>
-          <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+          <label for="id-aim">ID AIM</label>
+          <input type="text" class="form-control" id="id-aim" placeholder="ID AIM" >
         </div>
-        <div class="form-group w-50">
-          <label for="apellido">Apellido</label>
-          <input type="text" class="form-control" id="apellido" placeholder="Apellido">
-        </div>
-        <div class="form-group w-50">
-          <label for="id">ID AIM</label>
-          <input type="text" class="form-control" id="id" placeholder="ID AIM" >
-        </div>
-        <button class="btn btn-success w-50 my-2"> Confirmar asistencia</button>
+        <button class="btn btn-success w-50 my-2" id="confirmar-asistencia"> Confirmar asistencia</button>
     </form>
    </main>
    <footer>
@@ -66,5 +58,7 @@
       <p>© 2023 AIM. Todos los derechos reservados.</p>
     </section>
    </footer>
+   <script src="../js/asistencias.js"></script>
+   <script src="../js/sweetalert2.all.min.js"></script>
 </body>
 </html>

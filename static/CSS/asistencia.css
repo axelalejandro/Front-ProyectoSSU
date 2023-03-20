@@ -1,6 +1,7 @@
 .formulario-asistencia {
-    width: 75%;
+    width: 50%;
     height: auto;
+    min-height: 300px;
     background: rgb(34, 46, 65);
     padding: 20px;
     border-radius: 10px;

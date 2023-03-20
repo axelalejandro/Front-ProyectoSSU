@@ -28,6 +28,9 @@ async function obtenerEventos() {
 }
 
 async function agregarEvento() {
+    // obtener id del jwt
+    const token = localStorage.getItem('token');
+    const id = convertirToken(token);
     // obtener el valor de los campos
     const nombre = document.getElementById('nombre').value;
     const descripcion = document.getElementById('descripcion').value;
@@ -37,7 +40,6 @@ async function agregarEvento() {
     const horaFin = document.getElementById('hora-fin').value;
     const responsable = document.getElementById('responsable').value;
     const background = document.getElementById('background').value;
-    console.log(typeof(background))
     
     const horaInicioReemplazada = horaInicio.replace(':', '.');
     const horaFinReemplazada = horaFin.replace(':', '.');
@@ -46,7 +48,18 @@ async function agregarEvento() {
     let duracionSuma = horaFinNumero - horaInicioNumero;
     duracionSuma = duracionSuma.toFixed(2);
     const duracion = duracionSuma.toString() + 'h';
-    const respuesta = await fetch(base_url, {
+    const datos = {
+        nombre,
+        descripcion,
+        lugar,
+        fecha,
+        hora: horaInicio,
+        duracion,
+        responsable,
+        background,
+    }
+    console.log(datos)
+    const respuesta = await fetch(`${base_url}/${id}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -59,7 +72,8 @@ async function agregarEvento() {
             hora: horaInicio,
             duracion,
             responsable,
-            background
+            background,
+            usuarioId: id
         })
 
     });
@@ -96,6 +110,17 @@ document.addEventListener('DOMContentLoaded', async function () {
             window.open(`evento.html?id=${info.event.id}`);
         },
         dateClick: function (info) {
+            // el usuario no puede crear un evento en una fecha anterior a la actual
+            const fechaActual = new Date();
+            const fechaSeleccionada = new Date(info.dateStr);
+            if (fechaSeleccionada < fechaActual) {
+                Swal.fire(
+                    'Aviso!',
+                    'No puedes crear un evento en una fecha anterior a la actual',
+                    'warning'
+                )
+                return;
+            }
             frm.reset();
             eliminar.classList.add('d-none');
             document.getElementById('fecha').value = info.dateStr;
@@ -113,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const start = document.getElementById('fecha').value;
         if (title == '' || start == '') {
             Swal.fire(
-                'Avisos?',
+                'Aviso',
                 'Todo los campos son obligatorios',
                 'warning'
             )
@@ -123,3 +148,14 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     });
 })
+
+function convertirToken(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    const obj = JSON.parse(jsonPayload);
+    id = obj.id;
+    return id;
+}
