@@ -33,7 +33,7 @@
             <li><a href="listaTareas.html">lista de tareas</a></li>
             <li><a href="#">Proyectos</a></li>
             <li><a href="#">Departamentos</a></li>
-            <li><a href="#">Eventos</a></li>
+            <li><a href="eventos.html">Eventos</a></li>
             <li class="btn-group dropleft">
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Perfil
@@ -49,83 +49,83 @@
    <main>
     <div class="container w-100">
       <div class="w-100" id="calendar"></div>
-  </div>
-  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header bg-info">
-                  <h5 class="modal-title" id="titulo">Registro de Eventos</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <form id="formulario" autocomplete="off">
-                  <div class="modal-body">
-                      <div class="row">
-                          <div class="col-md-12">
-                              <div class="form-floating mb-3">
-                                  <input type="hidden" id="id" name="id">
-                                  <input id="nombre" type="text" class="form-control" name="nombre" value="">
-                                  <label for="nombre">Nombre del evento</label>
-                              </div>
-                          </div>
-                          <div class="col-md-12">
-                              <div class="form-floating mb-3">
-                                  <input type="hidden" id="id" name="id">
-                                  <input id="descripcion" type="text" class="form-control" name="descripcion" value="">
-                                  <label for="descripcion">Descripción</label>
-                              </div>
-                          </div>
-                          <div class="col-md-12">
-                              <div class="form-floating mb-3">
-                                  <input type="hidden" id="id" name="id">
-                                  <input id="lugar" type="text" class="form-control" name="lugar" value="">
-                                  <label for="lugar">Lugar</label>
-                              </div>
-                          </div>
-                          <div class="col-md-12">
-                              <div class="form-floating mb-3">
-                                  <input class="form-control" id="fecha" type="date" name="fecha">
-                                  <label for="fecha" class="form-label">Fecha</label>
-                              </div>
-                          </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-floating mb-3">
-                                    <input class="form-control" id="hora-inicio" type="time" name="hora-inicio">
-                                    <label for="hora-inicio" class="form-label">Hora de inicio</label>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="form-floating mb-3">
-                                    <input class="form-control" id="hora-fin" type="time" name="hora-fin">
-                                    <label for="hora-fin" class="form-label">Hora de finalización</label>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-12">
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title" id="titulo">Registro de Eventos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formulario" autocomplete="off">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="form-floating mb-3">
                                     <input type="hidden" id="id" name="id">
-                                    <input id="responsable" type="text" class="form-control" name="responsable" value="">
-                                    <label for="responsable">Respopnsable</label>
+                                    <input id="nombre" type="text" class="form-control" name="nombre" value="">
+                                    <label for="nombre">Nombre del evento</label>
                                 </div>
                             </div>
-                          <div class="col-md-12">
-                              <div class="form-floating mb-3">
-                                  <input class="form-control" id="background" type="color" name="background">
-                                  <label for="background" class="form-label">Color</label>
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+                                    <input type="hidden" id="id" name="id">
+                                    <input id="descripcion" type="text" class="form-control" name="descripcion" value="">
+                                    <label for="descripcion">Descripción</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+                                    <input type="hidden" id="id" name="id">
+                                    <input id="lugar" type="text" class="form-control" name="lugar" value="">
+                                    <label for="lugar">Lugar</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="fecha" type="date" name="fecha">
+                                    <label for="fecha" class="form-label">Fecha</label>
+                                </div>
+                            </div>
+                              <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                      <input class="form-control" id="hora-inicio" type="time" name="hora-inicio">
+                                      <label for="hora-inicio" class="form-label">Hora de inicio</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                      <input class="form-control" id="hora-fin" type="time" name="hora-fin">
+                                      <label for="hora-fin" class="form-label">Hora de finalización</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-12">
+                                  <div class="form-floating mb-3">
+                                      <input type="hidden" id="id" name="id">
+                                      <input id="responsable" type="text" class="form-control" name="responsable" value="">
+                                      <label for="responsable">Respopnsable</label>
+                                  </div>
                               </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                      <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
-                      <button type="submit" class="btn btn-primary" id="btnAccion">Guardar</button>
-                  </div>
-              </form>
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="background" type="color" name="background">
+                                    <label for="background" class="form-label">Color</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
+                        <button type="submit" class="btn btn-primary" id="btnAccion">Guardar</button>
+                    </div>
+                </form>
 
-          </div>
-      </div>
-  </div>
+            </div>
+        </div>
+    </div>
    </main>
    <footer>
     <section class="footer-section__info">

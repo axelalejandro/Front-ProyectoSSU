@@ -126,3 +126,7 @@
       opacity: 0;
     }
   }
+
+  .fc .fc-daygrid-day-frame {
+    color: #000;
+  }

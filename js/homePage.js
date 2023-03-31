@@ -4,6 +4,11 @@ function cerrarSesion() {
 }
 
 const proyectosContainer = document.querySelector('.proyectos-container');
+let calendarEl = document.getElementById('calendar');
+let eliminar = document.getElementById('btnEliminar');
+let myModal = new bootstrap.Modal(document.getElementById('myModal'));
+let btnAccion = document.getElementById('btnAccion');
+let frm = document.getElementById('formulario');
 
 obtenerProyectosRecientes();
 async function obtenerProyectosRecientes() {
@@ -16,6 +21,7 @@ async function obtenerProyectosRecientes() {
         }
     });
     const respuesta = await resultado.json();
+    console.log(respuesta);
     if(respuesta.ok == false) {
         while(proyectosContainer.firstChild) {
             proyectosContainer.removeChild(proyectosContainer.firstChild);
@@ -45,17 +51,41 @@ function mostrarProyectos(proyectos) {
         `
     });
 }
-// Obtén el contenedor donde mostrarás el código QR
-var qrcodeContainer = document.getElementById('qrcode');
 
-// Crea el código QR con la información de tu evento
-var qrcode = new QRCode(qrcodeContainer, {
-    text: 'http://127.0.0.1:5500/HTML/formularioProyectos.html',
-    width: 200,
-    height: 200
-});
+obtenerEventos()
+async function obtenerEventos() {
+    const eventos = await fetch('http://localhost:3000/eventos', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const data = await eventos.json();
+    return data.eventos.map(evento => ({
+        id: evento.id,
+        title: evento.nombre,
+        start: evento.fecha,
+        backgroundColor: evento.background,
+    }));
+}
 
-// Redirige al usuario a la página web del evento cuando escanea el código QR
-qrcodeContainer.addEventListener('click', function() {
-    window.location.href = 'http://127.0.0.1:5500/HTML/formularioProyectos.html';
-});
+
+document.addEventListener('DOMContentLoaded', async function () {
+    const eventos = await obtenerEventos();
+    calendar = new FullCalendar.Calendar(calendarEl, {
+        timeZone: 'local',
+        initialView: 'dayGridMonth',
+        locale: 'es',
+        headerToolbar: {
+            left: 'prev next today',
+            center: 'title',
+            right: 'dayGridMonth timeGridWeek listWeek'
+        },
+          
+        events: eventos,
+        eventClick: function (info) {
+            window.open(`evento.html?id=${info.event.id}`);
+        }     
+    });
+    calendar.render();
+})

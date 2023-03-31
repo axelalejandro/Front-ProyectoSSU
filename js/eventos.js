@@ -112,15 +112,17 @@ document.addEventListener('DOMContentLoaded', async function () {
         dateClick: function (info) {
             // el usuario no puede crear un evento en una fecha anterior a la actual
             const fechaActual = new Date();
+            fechaActual.setHours(0, 0, 0, 0); // establecer hora, minuto, segundo y milisegundo en cero
             const fechaSeleccionada = new Date(info.dateStr);
+            fechaSeleccionada.setHours(0, 0, 0, 0); // establecer hora, minuto, segundo y milisegundo en cero
             if (fechaSeleccionada < fechaActual) {
-                Swal.fire(
-                    'Aviso!',
-                    'No puedes crear un evento en una fecha anterior a la actual',
-                    'warning'
-                )
-                return;
-            }
+              Swal.fire(
+                'Aviso!',
+                'No puedes crear un evento en dias anteriores o en el mismo dia',
+                'warning'
+              )
+              return;
+        }
             frm.reset();
             eliminar.classList.add('d-none');
             document.getElementById('fecha').value = info.dateStr;
